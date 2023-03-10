@@ -1,38 +1,49 @@
 import { model, Schema, models } from "mongoose";
 
 const userSchema = new Schema({
-  firstname: { type: String, required: true },
-  lastname: { type: String, required: true },
-  phone: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   email: {
     type: String,
-    required: true,
+    required: [true, "A valid email is required"],
     unique: true,
   },
-  birthday: { type: Date, required: false },
-  clothingType: { type: String },
-  bodyMeasurements: {
-    measureUnit: { type: String, required: false },
-    waist: { type: Number, required: false },
-    hips: { type: Number, required: false },
-    chest: { type: Number, required: false },
-    height: { type: Number, required: false },
+  password: {
+    type: String,
+    required: true,
+    select: false,
   },
-  stylePreferences: [
-    {
-      garmentName: { type: String },
-      options: [
-        {
-          bodySection: { type: String },
-          preference: { type: String },
-        },
-      ],
-    },
-  ],
+  firstname: {
+    type: String,
+    minLength: [4, "Your firstname must be at least 4 characters long"],
+    maxLength: [30, "Your firstname cannot have more than 30 characters"],
+    default: "non available",
+  },
+  lastname: {
+    type: String,
+    minLength: [4, "Your lastname must be at least 4 characters long"],
+    maxLength: [30, "Your lastname cannot have more than 30 characters"],
+    default: "non available",
+  },
+  phone: {
+    type: String,
+    minLength: [10, "Your phone number must contain at least 10 digits"],
+    default: "non available",
+  },
+  birthday: {
+    type: String,
+    default: "non available",
+  },
+  stylePreferenceCode: {
+    type: String,
+    default: "non available",
+  },
+  wishlistCode: {
+    type: String,
+    default: "non available",
+  },
+  creationDate: {
+    type: String,
+    required: true,
+  },
 });
 
 const User = models.User || model("User", userSchema);

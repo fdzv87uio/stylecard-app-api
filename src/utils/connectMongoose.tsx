@@ -1,11 +1,17 @@
 import mongoose from "mongoose";
 
 export async function connectMongoose() {
+  let url = process.env.MONGODB_URI;
+  if (!url) {
+    throw new Error("Invalid MongoBD Connection Url");
+  }
   try {
-    console.log("connecting to MongoBD...");
-    mongoose.connect(process.env.MONGO_DB_URI!);
-    console.log("MongoDB connection established");
+    const { connection } = await mongoose.connect(url);
+    if (connection.readyState === 1) {
+      console.log("MongoDB Connected");
+      return Promise.resolve(true);
+    }
   } catch (error) {
-    console.log("An error Ocurred while connecting to MongoBD: " + error);
+    return Promise.reject(error);
   }
 }
