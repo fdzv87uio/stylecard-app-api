@@ -4,6 +4,7 @@ import { connectMongoose } from "@/utils/connectMongoose";
 import { hash } from "bcryptjs";
 import mongoose from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
+import NextCors from "nextjs-cors";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,6 +12,12 @@ export default async function handler(
 ) {
   await connectMongoose().catch((error) => res.json(error));
   const { token } = req.body;
+  await NextCors(req, res, {
+    // Options
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
   if (req.method !== "GET")
     res.status(409).json({ error: "Html Method not allowed" });
   if (!token) res.status(409).json({ error: " was not provided" });
