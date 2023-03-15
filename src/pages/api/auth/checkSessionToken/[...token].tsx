@@ -1,8 +1,5 @@
 import Session from "@/models/Session";
-import User from "@/models/User";
 import { connectMongoose } from "@/utils/connectMongoose";
-import { hash } from "bcryptjs";
-import mongoose from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
 
