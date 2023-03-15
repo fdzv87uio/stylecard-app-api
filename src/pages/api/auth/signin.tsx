@@ -12,6 +12,16 @@ export default async function handler(
 ) {
   await connectMongoose().catch((error) => res.json(error));
   const { email, password } = req.body;
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   if (req.method !== "POST")
     res.status(409).json({ error: "Html Method not allowed" });
   if (!email) res.status(409).json({ error: "Email was not provided" });
