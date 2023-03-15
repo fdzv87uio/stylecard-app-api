@@ -4,6 +4,7 @@ import { connectMongoose } from "@/utils/connectMongoose";
 import { hash } from "bcryptjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
+import { getUrlSafeString } from "@/utils/formatters";
 
 // Initializing the cors middleware
 // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
@@ -59,11 +60,12 @@ export default async function handler(
       console.log("New user Created");
       const token = `stylecard-session-token: ${email}, ${today}`;
       const tokenHash = await hash(token, salt);
+      const safeTokenHash = getUrlSafeString(tokenHash);
       console.log("Creating Session Token");
       const newToken = await Session.create({
         email: email,
         accessDatetime: today,
-        token: tokenHash,
+        token: safeTokenHash,
       });
       const newUser = {
         email: test.email,

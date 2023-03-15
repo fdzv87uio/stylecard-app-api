@@ -4,6 +4,7 @@ import { connectMongoose } from "@/utils/connectMongoose";
 import { compare, hash } from "bcryptjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
+import { getUrlSafeString } from "@/utils/formatters";
 
 // Initializing the cors middleware
 // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
@@ -53,11 +54,12 @@ export default async function handler(
         const salt = parseInt(process.env.ENCRYPTION_SALT!);
         const token = `stylecard-session-token: ${email}, ${today}`;
         const tokenHash = await hash(token, salt);
+        const safeTokenHash = getUrlSafeString(tokenHash);
         console.log("Creating Session Token");
         const newToken = await Session.create({
           email: email,
           accessDatetime: today,
-          token: tokenHash,
+          token: safeTokenHash,
         });
         return res.status(201).json({ status: "success", data: newToken });
       } else {
