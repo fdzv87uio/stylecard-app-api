@@ -12,7 +12,6 @@ export default async function handler(
 ) {
   await connectMongoose().catch((error) => res.json(error));
   const { token } = req.body;
-  res.setHeader("Access-Control-Allow-Origin", "*");
   if (req.method !== "GET")
     res.status(409).json({ error: "Html Method not allowed" });
   if (!token) res.status(409).json({ error: " was not provided" });
