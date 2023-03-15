@@ -34,11 +34,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { token } = req.query;
   // Run the middleware
   await runMiddleware(req, res, cors);
   await connectMongoose().catch((error) => res.json(error));
-  const { token } = req.body;
-
   if (req.method !== "GET")
     res.status(409).json({ error: "Html Method not allowed" });
   if (!token) res.status(409).json({ error: " was not provided" });
