@@ -38,7 +38,7 @@ export default async function handler(
   if (req.method !== "GET")
     res.status(409).json({ error: "Html Method not allowed" });
   if (!token) res.status(409).json({ error: " was not provided" });
-  const existingSession = await Session.findOne({ token });
+  const existingSession = await Session.findOne({ token }).lean();
   if (!existingSession) {
     res.status(409).json({ error: "User Session Token not available" });
   } else {

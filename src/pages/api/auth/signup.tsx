@@ -42,7 +42,7 @@ export default async function handler(
     res.status(409).json({ error: "Html Method not allowed" });
   if (!email) res.status(409).json({ error: "Email was not provided" });
   if (!password) res.status(409).json({ error: "Password was not provided" });
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ email }).lean();
   if (existingUser) {
     res.status(409).json({ error: "Email is already registered" });
   } else {
