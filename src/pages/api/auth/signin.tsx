@@ -12,12 +12,7 @@ export default async function handler(
 ) {
   await connectMongoose().catch((error) => res.json(error));
   const { email, password } = req.body;
-  await NextCors(req, res, {
-    // Options
-    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-    origin: "*",
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  });
+  res.setHeader("Access-Control-Allow-Origin", "*");
   if (req.method !== "POST")
     res.status(409).json({ error: "Html Method not allowed" });
   if (!email) res.status(409).json({ error: "Email was not provided" });
