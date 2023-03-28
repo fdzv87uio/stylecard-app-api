@@ -11,13 +11,13 @@ const userSchema = new Schema({
     required: true,
     select: false,
   },
-  firstname: {
+  first_name: {
     type: String,
     minLength: [4, "Your firstname must be at least 4 characters long"],
     maxLength: [30, "Your firstname cannot have more than 30 characters"],
     default: "non available",
   },
-  lastname: {
+  last_name: {
     type: String,
     minLength: [4, "Your lastname must be at least 4 characters long"],
     maxLength: [30, "Your lastname cannot have more than 30 characters"],
@@ -32,17 +32,48 @@ const userSchema = new Schema({
     type: String,
     default: "non available",
   },
-  stylePreferenceCode: {
+  style_preference_code: {
     type: String,
     default: "non available",
   },
-  wishlistCode: {
+  wishlist_code: {
     type: String,
     default: "non available",
   },
-  creationDate: {
+  creation_date: {
     type: String,
     required: true,
+  },
+  body_measurements: {
+    height: { type: Number, default:0 },
+    chest: { type: Number, default:0 },
+    waist: { type: Number, default:0 },
+    hips: { type: Number, default:0 },
+    neck: { type: Number, default:0 },
+    arm_length: { type: Number, default:0 },
+    shoulder: { type: Number, default:0 },
+    upper_leg_circumference: { type: Number, default:0 },
+    leg_length: { type: Number, default:0 },
+    ankle_circumference: { type: Number, default:0 },
+    wrist_circumference: { type: Number, default:0 },
+    shoulder_to_elbow: { type: Number, default:0 },
+    elbow_to_wrist: { type: Number, default:0 },
+    ankle_to_knee: { type: Number, default:0 },
+    knee_to_hip: { type: Number, default:0 },
+    lower_leg_circumference: { type: Number, default:0 },
+    upper_arm_circumference: { type: Number, default:0 },
+    lower_arm_circumference: { type: Number, default:0 },
+    torso_length: { type: Number, default:0 },
+    inseam: { type: Number, default:0 },
+    outseam: { type: Number, default:0 },
+    bust: { type: Number, default:0 },
+    shoulder_to_waist: { type: Number, default:0 },
+    underbust_to_hip: { type: Number, default:0 },
+    shoulder_to_hem: { type: Number, default:0 },
+    rise: { type: Number, default:0 },
+    waist_to_butt: { type: Number, default:0 },
+    hem_circumference: { type: Number, default:0 },
+    shoulder_to_crotch: { type: Number, default:0 },
   },
 });
 

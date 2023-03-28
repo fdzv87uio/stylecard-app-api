@@ -7,7 +7,7 @@ export function runMiddleware(req: NextApiRequest, res: NextApiResponse) {
   // Initializing the cors middleware
   // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
   const cors = Cors({
-    methods: ["POST", "GET", "HEAD"],
+    methods: ["POST", "GET", "DELETE", "PUT"],
   });
   return new Promise((resolve, reject) => {
     cors(req, res, (result: any) => {
