@@ -15,3 +15,9 @@ export interface newProductProps {
   color_size_image: any;
   date_pulled: String;
 }
+
+export interface newStylePreferenceProps {
+  _id: String;
+  creator_id: String;
+  product_category: any;
+}

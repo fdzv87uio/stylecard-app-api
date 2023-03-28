@@ -1,7 +1,7 @@
 import { connectMongoose } from "@/utils/connectMongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
+import StylePreference from "@/models/StylePreference";
 import { runMiddleware } from "@/utils/corsUtil";
-import User from "@/models/User";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,29 +11,30 @@ export default async function handler(
   await runMiddleware(req, res);
   await connectMongoose().catch((error) => res.json(error));
   const { names, values } = req.body;
-  const { user_id } = req.query;
+  const { style_preference_id } = req.query;
   if (req.method !== "PUT")
     res.status(405).json({ error: "Html Method not allowed" });
   try {
-    console.log("Updating Product");
-    const mongoQuery = { _id: user_id };
+    console.log("Updating Style Preference");
+    const mongoQuery = { _id: style_preference_id };
     let dataUpdate: any = {};
     names.forEach((item: any, key: number) => {
       dataUpdate[`${item}`] = values[key];
     });
+
     const options = { upsert: false };
-    const response = await User.updateOne(mongoQuery, dataUpdate, options);
+    const response = await StylePreference.updateOne(mongoQuery, dataUpdate, options);
     if (response.acknowledged) {
-      console.log("Product Updated");
+      console.log("Style Preference");
       return res.status(201).json({ status: "success", data: response });
     } else {
       res.status(409).json({
-        error: "An error occurred while updating product",
+        error: "An error occurred while updating Style Preference",
       });
     }
   } catch (error: any) {
     res.status(409).json({
-      error: "An error occurred while updating product: " + error.message,
+      error: "An error occurred while Style Preference: " + error.message,
     });
   }
 }

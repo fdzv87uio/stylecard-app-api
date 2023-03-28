@@ -10,14 +10,17 @@ export default async function handler(
   // Run the middleware
   await runMiddleware(req, res);
   await connectMongoose().catch((error) => res.json(error));
-  const { name, value } = req.body;
+  const { names, values } = req.body;
   const { product_id } = req.query;
   if (req.method !== "PUT")
     res.status(405).json({ error: "Html Method not allowed" });
   try {
     console.log("Updating Product");
     const mongoQuery = { _id: product_id };
-    const dataUpdate = { [name]: value };
+    let dataUpdate: any = {};
+    names.forEach((item: any, key: number) => {
+      dataUpdate[`${item}`] = values[key];
+    });
     const options = { upsert: false };
     const response = await Product.updateOne(mongoQuery, dataUpdate, options);
     if (response.acknowledged) {
