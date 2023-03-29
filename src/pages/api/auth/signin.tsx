@@ -6,7 +6,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getUrlSafeString } from "@/utils/formatters";
 import { runMiddleware } from "@/utils/corsUtil";
 
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -37,6 +36,7 @@ export default async function handler(
           email: email,
           accessDatetime: today,
           token: safeTokenHash,
+          user_id: existingUser._id,
         });
         return res.status(201).json({ status: "success", data: newToken });
       } else {

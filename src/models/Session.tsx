@@ -15,6 +15,11 @@ const sessionSchema = new Schema({
     required: true,
     unique: true,
   },
+  user_id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 });
 
 const Session = models.Session || model("Session", sessionSchema);

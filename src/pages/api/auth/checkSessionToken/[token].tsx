@@ -24,6 +24,7 @@ export default async function handler(
         email: existingSession.email,
         accessDatetime: existingSession.accessDatetime,
         token: existingSession.token,
+        user_id: existingSession.user_id,
       };
       return res.status(201).json({ status: "success", data: authUser });
     } catch (error) {
