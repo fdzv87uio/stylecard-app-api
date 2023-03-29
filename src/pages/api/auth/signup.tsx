@@ -25,7 +25,6 @@ export default async function handler(
   } else {
     try {
       console.log("creating user...");
-
       const today = new Date();
       const salt = parseInt(process.env.ENCRYPTION_SALT!);
       const hashedPass = await hash(password, salt);
