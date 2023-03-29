@@ -6,7 +6,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getUrlSafeString } from "@/utils/formatters";
 import { runMiddleware } from "@/utils/corsUtil";
 
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -31,7 +30,7 @@ export default async function handler(
       const test = await User.create({
         email: email,
         password: hashedPass,
-        creationDate: today,
+        creation_date: today,
       });
       console.log("New user Created");
       const token = `stylecard-session-token: ${email}, ${today}`;
@@ -42,6 +41,7 @@ export default async function handler(
         email: email,
         accessDatetime: today,
         token: safeTokenHash,
+        user_id: test._id,
       });
       const newUser = {
         email: test.email,
