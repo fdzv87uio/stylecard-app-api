@@ -13,14 +13,15 @@ export default async function handler(
   // Run the middleware
   await runMiddleware(req, res);
   await connectMongoose().catch((error) => res.json(error));
-  const { email, password } = req.body;
-  if (req.method !== "POST")
-    res.status(409).json({ error: "Html Method not allowed" });
-  if (!email) res.status(409).json({ error: "Email was not provided" });
-  if (!password) res.status(409).json({ error: "Password was not provided" });
+  const { password } = req.body;
+  const { email } = req.query;
+  if (req.method !== "GET")
+    res.status(405).json({ error: "Html Method not allowed" });
+  if (!email) res.status(400).json({ error: "Email was not provided" });
+  if (!password) res.status(400).json({ error: "Password was not provided" });
   const existingUser = await User.findOne({ email }).select("+password").lean();
   if (!existingUser) {
-    res.status(409).json({ error: "Invalid Credentials" });
+    res.status(403).json({ error: "Invalid Credentials" });
   } else {
     try {
       console.log("validating user...");
@@ -38,15 +39,15 @@ export default async function handler(
           token: safeTokenHash,
           user_id: existingUser._id,
         });
-        return res.status(201).json({ status: "success", data: newToken });
+        return res.status(200).json({ status: "success", data: newToken });
       } else {
-        res.status(409).json({
+        res.status(400).json({
           error: "Passwords do not match",
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       res.status(409).json({
-        error: "An error occurred while creating user: " + error,
+        error: error.message,
       });
     }
   }
