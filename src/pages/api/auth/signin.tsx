@@ -13,9 +13,8 @@ export default async function handler(
   // Run the middleware
   await runMiddleware(req, res);
   await connectMongoose().catch((error) => res.json(error));
-  const { password } = req.body;
-  const { email } = req.query;
-  if (req.method !== "GET")
+  const { email, password } = req.body;
+  if (req.method !== "POST")
     res.status(405).json({ error: "Html Method not allowed" });
   if (!email) res.status(400).json({ error: "Email was not provided" });
   if (!password) res.status(400).json({ error: "Password was not provided" });
