@@ -15,17 +15,12 @@ export default async function handler(
     res.status(405).json({ error: "Html Method not allowed" });
   try {
     console.log("Fetching Style Preference");
-    const mongoQuery = { _id: style_preference_id };
-
-    const response = await StylePreference.findOne(mongoQuery).lean();
-    if (response.data.status === "success") {
-      console.log("Style Preference Fetched...");
-      return res.status(201).json({ status: "success", data: response });
-    } else {
-      res.status(409).json({
-        error: "An error occurred while fetching Style Preference",
-      });
-    }
+    const result = await StylePreference.findOne({
+      _id: style_preference_id,
+    });
+    console.log(result);
+    console.log("Style Preference Fetched...");
+    return res.status(200).json({ status: "success", data: result });
   } catch (error: any) {
     res.status(409).json({
       error: error.message,
