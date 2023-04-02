@@ -2,18 +2,19 @@ import { model, Schema, models } from "mongoose";
 
 const productSchema = new Schema({
   brand_name: { type: String, required: true },
-  product_name: { type: String, required: true },
+  product_name: { type: String, required: true, unique: true },
   gender: { type: String, required: true },
   base_url: { type: String, required: true },
   product_url: { type: String, required: true },
   images: [{ type: String }],
-  composition: { type: String, required: true },
+  colors: [{ type: String }],
+  composition: { type: String },
   product_id: {
     key: { type: String, required: true },
     value: { type: String, required: true },
   },
   fit: { type: String, required: true },
-  categories: [{ type: String }],
+  categories: [{ type: String, required: true }],
   sizes: [
     {
       size_name: { type: String },
@@ -30,28 +31,8 @@ const productSchema = new Schema({
       body_length_max: { type: Number },
     },
   ],
-  color_price_size: [
-    {
-      color_name: { type: String },
-      XS: { type: String },
-      S: { type: String },
-      M: { type: String },
-      L: { type: String },
-      XL: { type: String },
-      XXL: { type: String },
-    },
-  ],
-  color_size_image: [
-    {
-      color_name: { type: String },
-      XS: [{ type: String }],
-      S: [{ type: String }],
-      M: [{ type: String }],
-      L: [{ type: String }],
-      XL: [{ type: String }],
-      XXL: [{ type: String }],
-    },
-  ],
+  color_size_price: { type: Schema.Types.Mixed },
+  color_size_images: { type: Schema.Types.Mixed },
   date_pulled: { type: String, required: true },
 });
 

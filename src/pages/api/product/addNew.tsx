@@ -20,12 +20,12 @@ export default async function handler(
     product_url,
     images,
     composition,
-    product_id,
+    id,
     fit,
-    category,
+    categories,
     sizes,
     color_size_price,
-    color_size_image,
+    color_size_images,
   } = req.body;
 
   if (req.method !== "POST")
@@ -36,38 +36,43 @@ export default async function handler(
     !gender ||
     !base_url ||
     !product_url ||
-    !images ||
-    !composition ||
-    !product_id ||
+    !id ||
     !fit ||
-    !category ||
+    !categories ||
     !sizes ||
     !color_size_price ||
-    !color_size_image
+    !color_size_images
   )
     res.status(400).json({ error: "Bad Request: Data Fields Missing" });
   const query = { product_name: product_name };
-  const existingProduct = await User.findOne(query).lean();
+  const existingProduct = await Product.findOne(query).lean();
   if (existingProduct) {
     res.status(403).json({ error: "Product already registered" });
   } else {
     try {
       console.log("Creating New Product");
       const today = new Date();
+      const colorArray = Object.keys(color_size_images);
+      const CSIKeys = Object.keys(color_size_images);
+      const firstElement = CSIKeys[0];
+      const defaultImage = color_size_images[firstElement].all[0];
+      const imagesArray = images ? images : [defaultImage];
+      const compositionValue = composition ? composition : "n/a";
       const response = await Product.create({
         brand_name,
         product_name,
         gender,
         base_url,
         product_url,
-        images,
-        composition,
-        product_id,
+        images: imagesArray,
+        colors: colorArray,
+        composition: compositionValue,
+        product_id: id,
         fit,
-        category,
+        categories,
         sizes,
         color_size_price,
-        color_size_image,
+        color_size_images,
         date_pulled: today,
       });
       console.log("New Product Created");
@@ -79,13 +84,14 @@ export default async function handler(
         base_url: response.base_url,
         product_url: response.product_url,
         images: response.images,
+        colors: response.colors,
         composition: response.composition,
         product_id: response.product_id,
         fit: response.fit,
-        category: response.category,
+        categories: response.categories,
         sizes: response.sizes,
         color_size_price: response.color_size_price,
-        color_size_image: response.color_size_image,
+        color_size_images: response.color_size_images,
         date_pulled: response.date_pulled,
       };
       return res.status(201).json({ status: "success", data: newProduct });
