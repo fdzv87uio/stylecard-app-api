@@ -1,10 +1,26 @@
 import Session from "@/models/Session";
+import { serialize } from "cookie";
 import User from "@/models/User";
 import { connectMongoose } from "@/utils/connectMongoose";
 import { compare, hash } from "bcryptjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getUrlSafeString } from "@/utils/formatters";
 import { runMiddleware } from "@/utils/corsUtil";
+import { sign } from "jsonwebtoken";
+
+// user login function
+const createUserJWT = async (id: string, email: string) => {
+  try {
+    let jwtSecret = process.env.JWT_SECRET!;
+    let token = sign({ id: id, username: email, type: "user" }, jwtSecret, {
+      expiresIn: "2h",
+    });
+    return { status: "ok", data: token };
+  } catch (error) {
+    console.log(error);
+    return { status: "error" };
+  }
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,19 +42,11 @@ export default async function handler(
       console.log("validating user...");
       const passwordMatch = await compare(password, existingUser.password);
       if (passwordMatch) {
-        const today = new Date();
-        const salt = parseInt(process.env.ENCRYPTION_SALT!);
-        const token = `stylecard-session-token: ${email}, ${today}`;
-        const tokenHash = await hash(token, salt);
-        const safeTokenHash = getUrlSafeString(tokenHash);
-        console.log("Creating Session Token");
-        const newToken = await Session.create({
-          email: email,
-          accessDatetime: today,
-          token: safeTokenHash,
-          user_id: existingUser._id,
-        });
-        return res.status(200).json({ status: "success", data: newToken });
+        const token = await createUserJWT(existingUser._id, existingUser.email);
+        if (token.status === "ok") {
+          const tokenString = token.data!;
+          res.status(500).json({ status: "success", token: tokenString });
+        }
       } else {
         res.status(400).json({
           error: "Passwords do not match",
