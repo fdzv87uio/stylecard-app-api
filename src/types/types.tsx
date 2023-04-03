@@ -22,3 +22,11 @@ export interface newStylePreferenceProps {
   creator_id: String;
   product_category: any;
 }
+
+export interface newWishlistProps {
+  _id?: String;
+  creator_id: String;
+  creation_datetime: String;
+  latest_update: String;
+  items: any[];
+}
