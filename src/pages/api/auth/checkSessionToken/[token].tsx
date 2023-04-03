@@ -8,10 +8,12 @@ const verifyToken = (token: any) => {
   try {
     let jwtSecret = process.env.JWT_SECRET!;
     const ver: any = verify(token, jwtSecret);
+
     if (ver.type === "user") {
-      return true;
+      let result = { status: "success", data: ver };
+      return result;
     } else {
-      return false;
+      return null;
     }
   } catch (error) {
     console.log(JSON.stringify(error), "error");
@@ -37,7 +39,7 @@ export default async function handler(
       const isTokenVerified = verifyToken(token);
       if (isTokenVerified) {
         console.log("Token Validated");
-        res.status(201).json({ status: "success" });
+        res.status(200).json({ status: "success" });
       }
     } catch (error) {
       res.status(409).json({
