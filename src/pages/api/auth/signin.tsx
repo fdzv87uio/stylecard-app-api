@@ -45,7 +45,7 @@ export default async function handler(
         const token = await createUserJWT(existingUser._id, existingUser.email);
         if (token.status === "ok") {
           const tokenString = token.data!;
-          res.status(500).json({ status: "success", token: tokenString });
+          res.status(200).json({ status: "success", token: tokenString });
         }
       } else {
         res.status(400).json({
