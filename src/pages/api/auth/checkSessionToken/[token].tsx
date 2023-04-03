@@ -36,10 +36,11 @@ export default async function handler(
   } else {
     try {
       console.log("Validating Token");
-      const isTokenVerified = verifyToken(token);
-      if (isTokenVerified) {
+      const isTokenVerified: any = verifyToken(token);
+      if (isTokenVerified.status === "success") {
+        const userInfo = isTokenVerified.data;
         console.log("Token Validated");
-        res.status(200).json({ status: "success" });
+        res.status(200).json({ status: "success", user_info: userInfo });
       }
     } catch (error) {
       res.status(409).json({
