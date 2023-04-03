@@ -49,7 +49,7 @@ export default async function handler(
         }
       } else {
         res.status(400).json({
-          error: "Passwords do not match",
+          error: "The Passwords do not match",
         });
       }
     } catch (error: any) {
