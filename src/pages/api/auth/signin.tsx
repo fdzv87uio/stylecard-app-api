@@ -12,9 +12,7 @@ import { sign } from "jsonwebtoken";
 const createUserJWT = async (id: string, email: string) => {
   try {
     let jwtSecret = process.env.JWT_SECRET!;
-    let token = sign({ id: id, username: email, type: "user" }, jwtSecret, {
-      expiresIn: "2h",
-    });
+    let token = sign({ id: id, username: email, type: "user" }, jwtSecret);
     return { status: "ok", data: token };
   } catch (error) {
     console.log(error);
