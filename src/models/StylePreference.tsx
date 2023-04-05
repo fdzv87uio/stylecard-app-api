@@ -356,10 +356,6 @@ const stylePreferenceSchema = new Schema({
     type: String,
     default: "n/a",
   },
-  sex: {
-    type: String,
-    default: "both",
-  },
 });
 
 const StylePreference =
