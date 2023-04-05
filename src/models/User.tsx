@@ -23,6 +23,7 @@ const userSchema = new Schema({
     maxLength: [30, "Your lastname cannot have more than 30 characters"],
     default: "non available",
   },
+  gender: { type: String, required: true, default: "both" },
   phone: {
     type: String,
     minLength: [10, "Your phone number must contain at least 10 digits"],
