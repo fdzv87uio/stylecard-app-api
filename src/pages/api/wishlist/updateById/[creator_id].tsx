@@ -22,16 +22,14 @@ export default async function handler(
       items: items,
       latest_update: today.toLocaleDateString(),
     };
-    const options = { upsert: false };
-    const response = await Wishlist.updateOne(mongoQuery, dataUpdate, options);
-    if (response.acknowledged) {
-      console.log("Wishlist Updated");
-      return res.status(201).json({ status: "success", data: response });
-    } else {
-      res.status(409).json({
-        error: "An error occurred while updating wishlist",
-      });
-    }
+    const options = { new: true };
+    const response = await Wishlist.findOneAndUpdate(
+      mongoQuery,
+      dataUpdate,
+      options
+    );
+    console.log("Wishlist Updated");
+    return res.status(200).json({ status: "success", data: response });
   } catch (error: any) {
     res.status(409).json({
       error: "An error occurred while updating wishlist: " + error.message,

@@ -22,16 +22,14 @@ export default async function handler(
       dataUpdate[`${item}`] = values[key];
     });
 
-    const options = { upsert: false };
-    const response = await StylePreference.updateOne(mongoQuery, dataUpdate, options);
-    if (response.acknowledged) {
-      console.log("Style Preference");
-      return res.status(201).json({ status: "success", data: response });
-    } else {
-      res.status(409).json({
-        error: "An error occurred while updating Style Preference",
-      });
-    }
+    const options = { new: true };
+    const response = await StylePreference.findOneAndUpdate(
+      mongoQuery,
+      dataUpdate,
+      options
+    );
+    console.log("Style Preference");
+    return res.status(200).json({ status: "success", data: response });
   } catch (error: any) {
     res.status(409).json({
       error: "An error occurred while Style Preference: " + error.message,

@@ -21,16 +21,14 @@ export default async function handler(
     names.forEach((item: any, key: number) => {
       dataUpdate[`${item}`] = values[key];
     });
-    const options = { upsert: false };
-    const response = await User.updateOne(mongoQuery, dataUpdate, options);
-    if (response.acknowledged) {
-      console.log("Product Updated");
-      return res.status(201).json({ status: "success", data: response });
-    } else {
-      res.status(409).json({
-        error: "An error occurred while updating product",
-      });
-    }
+    const options = { new: true };
+    const response = await User.findOneAndUpdate(
+      mongoQuery,
+      dataUpdate,
+      options
+    );
+    console.log("Product Updated");
+    return res.status(200).json({ status: "success", data: response });
   } catch (error: any) {
     res.status(409).json({
       error: "An error occurred while updating product: " + error.message,
