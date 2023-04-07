@@ -48,11 +48,6 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@next-auth/mongodb-adapter@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/@next-auth/mongodb-adapter/-/mongodb-adapter-1.1.1.tgz"
-  integrity sha512-X5O4U4l2M8nyp/B3qF5GOr/JJw2ShKgWfTZRa80Y5CUzTPPmf09ggL5v5UwCmz9l2RIv2GUxO8hK4qrcaZvDRw==
-
 "@next/env@13.2.3":
   version "13.2.3"
   resolved "https://registry.npmjs.org/@next/env/-/env-13.2.3.tgz"
@@ -1619,7 +1614,7 @@ mongodb-connection-string-url@^2.6.0:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
 
-mongodb@5.1.0, mongodb@^5.1.0:
+mongodb@5.1.0:
   version "5.1.0"
   resolved "https://registry.npmjs.org/mongodb/-/mongodb-5.1.0.tgz"
   integrity sha512-qgKb7y+EI90y4weY3z5+lIgm8wmexbonz0GalHkSElQXVKtRuwqXuhXKccyvIjXCJVy9qPV82zsinY0W1FBnJw==
