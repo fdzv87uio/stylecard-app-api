@@ -7,13 +7,14 @@ export interface newProductProps {
   product_url: String;
   images: any;
   colors: String[];
+  merchant_price: String;
   composition: String;
   product_id: any;
   fit: String;
   categories: String[];
   sizes: any;
-  color_size_price: any;
-  color_size_images: any;
+  color_size_price?: any;
+  color_size_images?: any;
   date_pulled: String;
 }
 

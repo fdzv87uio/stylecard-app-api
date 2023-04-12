@@ -24,8 +24,8 @@ export default async function handler(
     fit,
     categories,
     sizes,
-    color_size_price,
-    color_size_images,
+    colors,
+    merchant_price,
   } = req.body;
 
   if (req.method !== "POST")
@@ -40,8 +40,9 @@ export default async function handler(
     !fit ||
     !categories ||
     !sizes ||
-    !color_size_price ||
-    !color_size_images
+    !colors ||
+    !merchant_price ||
+    !images
   )
     res.status(400).json({ error: "Bad Request: Data Fields Missing" });
   const query = { product_name: product_name };
@@ -52,11 +53,6 @@ export default async function handler(
     try {
       console.log("Creating New Product");
       const today = new Date();
-      const colorArray = Object.keys(color_size_images);
-      const CSIKeys = Object.keys(color_size_images);
-      const firstElement = CSIKeys[0];
-      const defaultImage = color_size_images[firstElement].all[0];
-      const imagesArray = images ? images : [defaultImage];
       const compositionValue = composition ? composition : "n/a";
       const response = await Product.create({
         brand_name,
@@ -64,15 +60,14 @@ export default async function handler(
         gender,
         base_url,
         product_url,
-        images: imagesArray,
-        colors: colorArray,
+        images,
+        colors,
+        merchant_price,
         composition: compositionValue,
         product_id: id,
         fit,
         categories,
         sizes,
-        color_size_price,
-        color_size_images,
         date_pulled: today,
       });
       console.log("New Product Created");
@@ -85,13 +80,12 @@ export default async function handler(
         product_url: response.product_url,
         images: response.images,
         colors: response.colors,
+        merchant_price: response.merchant_price,
         composition: response.composition,
         product_id: response.product_id,
         fit: response.fit,
         categories: response.categories,
         sizes: response.sizes,
-        color_size_price: response.color_size_price,
-        color_size_images: response.color_size_images,
         date_pulled: response.date_pulled,
       };
       return res.status(201).json({ status: "success", data: newProduct });

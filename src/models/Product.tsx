@@ -8,6 +8,7 @@ const productSchema = new Schema({
   product_url: { type: String, required: true },
   images: [{ type: String }],
   colors: [{ type: String }],
+  merchant_price: { type: String, required: true },
   composition: { type: String },
   product_id: {
     key: { type: String, required: true },
@@ -31,8 +32,8 @@ const productSchema = new Schema({
       body_length_max: { type: Number },
     },
   ],
-  color_size_price: { type: Schema.Types.Mixed },
-  color_size_images: { type: Schema.Types.Mixed },
+  color_size_price: { type: String },
+  color_size_images: { type: String },
   date_pulled: { type: String, required: true },
 });
 
