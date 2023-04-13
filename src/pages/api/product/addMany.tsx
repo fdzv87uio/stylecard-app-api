@@ -29,7 +29,9 @@ export default async function handler(
         !item.id ||
         !item.fit ||
         !item.categories ||
-        !item.sizes 
+        !item.sizes ||
+        !item.color_size_images ||
+        !item.color_size_price
       ) {
         res.status(400).json({
           error: `Bad Request: item no. ${key + 1} has missing data fields`,
@@ -43,6 +45,9 @@ export default async function handler(
           });
         } else {
           const today = new Date();
+          const colorKeys = Object.keys(item.color_size_images);
+          const firstColorObject = item.color_size_images[colorKeys[0]];
+          const firstImage = firstColorObject.all[0];
           const compositionValue = item.composition ? item.composition : "n/a";
           try {
             const response = await Product.create({
@@ -51,7 +56,7 @@ export default async function handler(
               gender: item.gender,
               base_url: item.base_url,
               product_url: item.product_url,
-              images: item.images,
+              images: [firstImage],
               composition: compositionValue,
               product_id: item.id,
               fit: item.fit,

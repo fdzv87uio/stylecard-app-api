@@ -24,6 +24,8 @@ export default async function handler(
     fit,
     categories,
     sizes,
+    color_size_price,
+    color_size_images,
   } = req.body;
 
   if (req.method !== "POST")
@@ -37,7 +39,9 @@ export default async function handler(
     !id ||
     !fit ||
     !categories ||
-    !sizes 
+    !sizes ||
+    !color_size_price ||
+    !color_size_images
   )
     res.status(400).json({ error: "Bad Request: Data Fields Missing" });
   const query = { product_name: product_name };
@@ -48,6 +52,9 @@ export default async function handler(
     try {
       console.log("Creating New Product");
       const today = new Date();
+      const colorKeys = Object.keys(color_size_images);
+      const firstColorObject = color_size_images[colorKeys[0]];
+      const firstImage = firstColorObject.all[0];
       const compositionValue = composition ? composition : "n/a";
       const response = await Product.create({
         brand_name,
@@ -55,12 +62,14 @@ export default async function handler(
         gender,
         base_url,
         product_url,
-        images,
+        images:[firstImage],
         composition: compositionValue,
         product_id: id,
         fit,
         categories,
         sizes,
+        color_size_price,
+        color_size_images,
         date_pulled: today,
       });
       console.log("New Product Created");
@@ -77,6 +86,8 @@ export default async function handler(
         fit: response.fit,
         categories: response.categories,
         sizes: response.sizes,
+        color_size_price:response.color_size_price,
+        color_size_images:response.color_size_images,
         date_pulled: response.date_pulled,
       };
       return res.status(201).json({ status: "success", data: newProduct });
