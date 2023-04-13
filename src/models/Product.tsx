@@ -1,4 +1,4 @@
-import { model, Schema, models } from "mongoose";
+import mongoose, { model, Schema, models } from "mongoose";
 
 const productSchema = new Schema({
   brand_name: { type: String, required: true },
@@ -7,8 +7,6 @@ const productSchema = new Schema({
   base_url: { type: String, required: true },
   product_url: { type: String, required: true },
   images: [{ type: String }],
-  colors: [{ type: String }],
-  merchant_price: { type: String, required: true },
   composition: { type: String },
   product_id: {
     key: { type: String, required: true },
@@ -32,8 +30,8 @@ const productSchema = new Schema({
       body_length_max: { type: Number },
     },
   ],
-  color_size_price: { type: String },
-  color_size_images: { type: String },
+  color_size_price: { type: Schema.Types.Mixed },
+  color_size_images: { type: Schema.Types.Mixed },
   date_pulled: { type: String, required: true },
 });
 

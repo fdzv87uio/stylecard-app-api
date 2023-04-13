@@ -24,8 +24,6 @@ export default async function handler(
     fit,
     categories,
     sizes,
-    colors,
-    merchant_price,
   } = req.body;
 
   if (req.method !== "POST")
@@ -39,10 +37,7 @@ export default async function handler(
     !id ||
     !fit ||
     !categories ||
-    !sizes ||
-    !colors ||
-    !merchant_price ||
-    !images
+    !sizes 
   )
     res.status(400).json({ error: "Bad Request: Data Fields Missing" });
   const query = { product_name: product_name };
@@ -61,8 +56,6 @@ export default async function handler(
         base_url,
         product_url,
         images,
-        colors,
-        merchant_price,
         composition: compositionValue,
         product_id: id,
         fit,
@@ -79,8 +72,6 @@ export default async function handler(
         base_url: response.base_url,
         product_url: response.product_url,
         images: response.images,
-        colors: response.colors,
-        merchant_price: response.merchant_price,
         composition: response.composition,
         product_id: response.product_id,
         fit: response.fit,

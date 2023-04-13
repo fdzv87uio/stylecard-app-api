@@ -6,8 +6,6 @@ export interface newProductProps {
   base_url: String;
   product_url: String;
   images: any;
-  colors: String[];
-  merchant_price: String;
   composition: String;
   product_id: any;
   fit: String;

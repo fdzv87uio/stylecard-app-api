@@ -29,10 +29,7 @@ export default async function handler(
         !item.id ||
         !item.fit ||
         !item.categories ||
-        !item.sizes ||
-        !item.colors ||
-        !item.merchant_price ||
-        !item.images
+        !item.sizes 
       ) {
         res.status(400).json({
           error: `Bad Request: item no. ${key + 1} has missing data fields`,
@@ -55,7 +52,6 @@ export default async function handler(
               base_url: item.base_url,
               product_url: item.product_url,
               images: item.images,
-              colors: item.colors,
               composition: compositionValue,
               product_id: item.id,
               fit: item.fit,
