@@ -15,7 +15,6 @@ const wishlistSchema = new Schema({
   items: [
     {
       type: Schema.Types.Mixed,
-      unique: true,
     },
   ],
 });
