@@ -74,7 +74,7 @@ const userSchema = new Schema({
   waist_to_butt: { type: Number, default: 0 },
   hem_circumference: { type: Number, default: 0 },
   shoulder_to_crotch: { type: Number, default: 0 },
-  units: { type: String, default: "meters" },
+  units: { type: String, default: "centimeters" },
   form_completed: {
     type: Boolean,
     default: false,
