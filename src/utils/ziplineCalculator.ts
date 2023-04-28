@@ -43,7 +43,7 @@ export function getZiplineRanking(userMeasurements: any, userStylePreferences: a
         // MEASURE WAIST RANKING
         // prepare vars
         const userWaist = userMeasurements.waist;
-        const sizeGuideWaist = item.waist;
+        const sizeGuideWaist = itemSize.waist;
         const waistLambdaKey = item.category + "_waist";
         const waistLambda = userStylePreferences[waistLambdaKey];
         const currentWaistLambdaObject = LambdaEquivalenceTable.filter((x) => x.number === waistLambda)[0];
