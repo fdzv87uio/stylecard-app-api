@@ -92,6 +92,10 @@ function getRankingFromScalar(value: number, unit: string) {
         return 0.75;
     } else if (currentValue >= 0.5 && currentValue < 1) {
         return 0.5;
+    } else if (currentValue >= 1 && currentValue < 1.5) {
+        return 0.25;
+    } else if (currentValue >= 1.5 && currentValue < 2) {
+        return 0.1;
     } else {
         return 0;
     }
