@@ -88,6 +88,10 @@ function getRankingFromScalar(value: number, unit: string) {
         return 1;
     } else if (currentValue === 0) {
         return 1;
+    } else if (currentValue > 0 && currentValue < 0.5) {
+        return 0.75;
+    } else if (currentValue >= 0.5 && currentValue <= 1) {
+        return 0.5;
     } else {
         return 0;
     }
