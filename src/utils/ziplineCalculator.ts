@@ -57,7 +57,7 @@ export function getZiplineRanking(userMeasurements: any, userStylePreferences: a
         resultObject.waist_ranking = waistRanking ? waistRanking : 0;
 
         //CALCULATE OVERALL AVERAGE
-        if (hipRanking > 0 && chestRanking > 0 && waistRanking > 0) {
+        if (hipRanking && chestRanking && waistRanking) {
             resultObject.ranking_avg = (hipRanking + chestRanking + waistRanking) / 3;
         } else {
             resultObject.ranking_avg = 0;
