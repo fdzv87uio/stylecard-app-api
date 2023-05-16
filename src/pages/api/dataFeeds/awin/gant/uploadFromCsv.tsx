@@ -32,7 +32,6 @@ apiRoute.use(upload.single("uploaded_file"));
 
 apiRoute.post(async (req, res) => {
   try {
-    const openAI = await ConnectOpenAi();
     await runMiddleware(req, res);
     await connectMongoose().catch((error: any) => res.json(error.message));
     const { file_name } = req.body;

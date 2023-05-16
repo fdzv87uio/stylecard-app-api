@@ -4,7 +4,7 @@ export const SizeGuidesByBrand = [
         men_top: [
             {
                 size_name: "XS",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 neck: 35.5,
                 chest: 98,
                 waist: 98,
@@ -14,7 +14,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "S",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 neck: 37.5,
                 chest: 104,
                 waist: 104,
@@ -24,7 +24,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "M",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 neck: 39.5,
                 chest: 110,
                 waist: 110,
@@ -34,7 +34,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "L",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 neck: 41.5,
                 chest: 116,
                 waist: 116,
@@ -44,7 +44,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "XL",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 neck: 43.5,
                 chest: 122,
                 waist: 122,
@@ -54,7 +54,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "XXL",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 neck: 45.5,
                 chest: 128,
                 waist: 128,
@@ -64,7 +64,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "XXXL",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 neck: 47.5,
                 chest: 134,
                 waist: 136,
@@ -74,7 +74,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "4XL",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 neck: 49.5,
                 chest: 142,
                 waist: 144,
@@ -86,7 +86,7 @@ export const SizeGuidesByBrand = [
         women_top: [
             {
                 size_name: "XS",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 chest: 90,
                 waist: 88,
                 hip: 88,
@@ -95,7 +95,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "S",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 chest: 94,
                 waist: 92,
                 hip: 92,
@@ -104,7 +104,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "M",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 chest: 102,
                 waist: 100,
                 hip: 100,
@@ -113,7 +113,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "L",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 chest: 106,
                 waist: 104,
                 hip: 104,
@@ -122,7 +122,7 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "XL",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 chest: 114,
                 waist: 112,
                 hip: 112,
@@ -131,12 +131,88 @@ export const SizeGuidesByBrand = [
             },
             {
                 size_name: "XXL",
-                size_unit:"centimetres",
+                size_unit: "centimetres",
                 chest: 122,
                 waist: 120,
                 hip: 120,
                 back: 73,
                 sleeve: 63.5,
+            },
+        ]
+    },
+    {
+        brand_name: "dk active",
+        men_top: [],
+        women_top: [
+            {
+                size_name: "XS",
+                size_unit: "centimetres",
+                chest: 75,
+                waist: 60,
+                hip: 87,
+            },
+            {
+                size_name: "S",
+                size_unit: "centimetres",
+                chest: 80,
+                waist: 65,
+                hip: 93,
+            },
+            {
+                size_name: "M",
+                size_unit: "centimetres",
+                chest: 86,
+                waist: 70,
+                hip: 99,
+            },
+            {
+                size_name: "L",
+                size_unit: "centimetres",
+                chest: 92,
+                waist: 75,
+                hip: 105,
+            },
+            {
+                size_name: "XL",
+                size_unit: "centimetres",
+                chest: 98,
+                waist: 80,
+                hip: 111,
+            },
+            {
+                size_name: "XXL",
+                size_unit: "centimetres",
+                chest: 104,
+                waist: 85,
+                hip: 117,
+            },
+            {
+                size_name: "3XL",
+                size_unit: "centimetres",
+                chest: 115,
+                waist: 94,
+                hip: 123,
+            },
+            {
+                size_name: "4XL",
+                size_unit: "centimetres",
+                chest: 123,
+                waist: 103,
+                hip: 131,
+            },
+            {
+                size_name: "5XL",
+                size_unit: "centimetres",
+                chest: 131,
+                waist: 112,
+                hip: 139,
+            },
+            {
+                size_name: "6XL",
+                size_unit: "centimetres",
+                chest: 139,
+                waist: 121,
+                hip: 147,
             },
         ]
     },
