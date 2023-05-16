@@ -74,14 +74,18 @@ function getRankingFromScalar(value: number, unit: string) {
     if (unit === "centimeters") {
         currentValue = value * 0.393701;
     }
-    if (currentValue < -2) {
+    if (currentValue < -3) {
         return 0;
     } else if (currentValue > 0) {
         return 0;
+    } else if (currentValue >= -3 && currentValue < -2.5) {
+        return 0.15;
+    } else if (currentValue >= -2.5 && currentValue < -2) {
+        return 0.30;
     } else if (currentValue >= -2 && currentValue < -1.5) {
-        return 0.25;
+        return 0.45;
     } else if (currentValue >= -1.5 && currentValue < -1) {
-        return 0.5;
+        return 0.60;
     } else if (currentValue >= -1 && currentValue < -0.5) {
         return 0.75;
     } else if (currentValue >= -0.5 && currentValue < 0) {
