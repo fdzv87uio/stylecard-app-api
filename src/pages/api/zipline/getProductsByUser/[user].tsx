@@ -37,9 +37,12 @@ export default async function handler(
         hip: currentUser.hips,
         unit: currentUser.units,
       };
-      const currentZiplineResult = getZiplineRanking(userMeasurements, userStylePreferences, item);
-      let resultObject = { item: item, ranking: currentZiplineResult };
-      resultArray.push(resultObject);
+      const currentZiplineResult: any = getZiplineRanking(userMeasurements, userStylePreferences, item);
+      if (currentZiplineResult.ranking_avg !== 0) {
+        let resultObject = { item: item, ranking: currentZiplineResult };
+        resultArray.push(resultObject);
+      }
+
     })
     return res.status(200).json({ status: "success", data: resultArray });
   } catch (error: any) {
