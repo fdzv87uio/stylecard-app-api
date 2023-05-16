@@ -10,11 +10,12 @@ export function getZiplineRanking(userMeasurements: any, userStylePreferences: a
             hip_ranking: 0,
         }
         const itemSize = item.size;
+        const formattedCategory = item.category.replace("-", "_").trim();
         // MEASURE HIP RANKING
         // prepare vars
         const userHip = userMeasurements.hip;
         const sizeGuideHip = itemSize.hip;
-        const betaKey = item.category + "_hip";
+        const betaKey = formattedCategory + "_hip";
         const hipBeta = userStylePreferences[betaKey];
         const currentBetaObject = LambdaEquivalenceTable.filter((x) => x.number === hipBeta)[0];
         const betaRatio = currentBetaObject ? currentBetaObject.ratio : 1;
@@ -29,7 +30,7 @@ export function getZiplineRanking(userMeasurements: any, userStylePreferences: a
         // prepare vars
         const userChest = userMeasurements.chest;
         const sizeGuideChest = itemSize.chest;
-        const chestBetaKey = item.category + "_chest";
+        const chestBetaKey = formattedCategory + "_chest";
         const chestBeta = userStylePreferences[chestBetaKey];
         const currentChestBetaObject = LambdaEquivalenceTable.filter((x) => x.number === chestBeta)[0];
         const chestBetaRatio = currentChestBetaObject ? currentChestBetaObject.ratio : 1;
@@ -44,7 +45,7 @@ export function getZiplineRanking(userMeasurements: any, userStylePreferences: a
         // prepare vars
         const userWaist = userMeasurements.waist;
         const sizeGuideWaist = itemSize.waist;
-        const waistBetaKey = item.category + "_waist";
+        const waistBetaKey = formattedCategory + "_waist";
         const waistBeta = userStylePreferences[waistBetaKey];
         const currentWaistBetaObject = LambdaEquivalenceTable.filter((x) => x.number === waistBeta)[0];
         const waistBetaRatio = currentWaistBetaObject ? currentWaistBetaObject.ratio : 1;
