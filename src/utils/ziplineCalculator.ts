@@ -74,7 +74,7 @@ function getRankingFromScalar(value: number, unit: string) {
     if (unit === "centimeters") {
         currentValue = value * 0.393701;
     }
-    if (currentValue < -3) {
+    if (currentValue < -5) {
         return 0;
     } else if (currentValue > 0) {
         return 0;
