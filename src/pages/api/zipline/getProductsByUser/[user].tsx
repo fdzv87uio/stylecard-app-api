@@ -38,10 +38,8 @@ export default async function handler(
         unit: currentUser.units,
       };
       const currentZiplineResult: any = getZiplineRanking(userMeasurements, userStylePreferences, item);
-      if (currentZiplineResult.ranking_avg !== 0) {
-        let resultObject = { item: item, ranking: currentZiplineResult };
-        resultArray.push(resultObject);
-      }
+      let resultObject = { item: item, ranking: currentZiplineResult };
+      resultArray.push(resultObject);
 
     })
     return res.status(200).json({ status: "success", data: resultArray });
