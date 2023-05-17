@@ -142,7 +142,13 @@ export const SizeGuidesByBrand = [
     },
     {
         brand_name: "dk active",
-        men_top: [""],
+        men_top: [{
+            size_name: "N/A",
+            size_unit: "centimetres",
+            chest: 0,
+            waist: 0,
+            hip: 0,
+        }],
         women_top: [
             {
                 size_name: "XS",
