@@ -180,6 +180,24 @@ const stylePreferenceSchema = new Schema({
     max: 5,
     default: 1,
   },
+  bra_chest: {
+    type: Number,
+    min: 1,
+    max: 5,
+    default: 1,
+  },
+  bra_hip: {
+    type: Number,
+    min: 1,
+    max: 5,
+    default: 1,
+  },
+  bra_waist: {
+    type: Number,
+    min: 1,
+    max: 5,
+    default: 1,
+  },
 });
 
 const StylePreference =
