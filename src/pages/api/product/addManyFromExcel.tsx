@@ -90,7 +90,7 @@ apiRoute.post(async (req, res) => {
                         const response = await Product.create(newProduct);
                         newProductArray.push(newProduct);
                         docsProcessed = docsProcessed + 1;
-                    } else if (existingProduct && existingProduct.date_pulled !== today) {
+                    } else if (existingProduct && existingProduct.date_pulled !== today && existingProduct.size !== currentSize.size_name) {
                         const newProduct = {
                             brand_name: item.brand_name,
                             product_name: item.product_name,
