@@ -90,7 +90,26 @@ apiRoute.post(async (req, res) => {
                         const response = await Product.create(newProduct);
                         newProductArray.push(newProduct);
                         docsProcessed = docsProcessed + 1;
-                    } else if (existingProduct && existingProduct.date_pulled !== today && existingProduct.size !== currentSize.size_name) {
+                    } else if (existingProduct && existingProduct.date_pulled !== today && existingProduct.size.size_name !== currentSize.size_name) {
+                        const newProduct = {
+                            brand_name: item.brand_name,
+                            product_name: item.product_name,
+                            description: item.description,
+                            gender: item.gender,
+                            deep_url: item.deep_url,
+                            product_url: item.product_url,
+                            images: currentImageArray,
+                            color: color,
+                            product_id: idObject,
+                            category: currentCategory,
+                            size: currentSize,
+                            price: price,
+                            date_pulled: today,
+                        }
+                        const response = await Product.create(newProduct);
+                        newProductArray.push(newProduct);
+                        docsProcessed = docsProcessed + 1;
+                    } else if (existingProduct && existingProduct.date_pulled === today && existingProduct.size.size_name !== currentSize.size_name) {
                         const newProduct = {
                             brand_name: item.brand_name,
                             product_name: item.product_name,
