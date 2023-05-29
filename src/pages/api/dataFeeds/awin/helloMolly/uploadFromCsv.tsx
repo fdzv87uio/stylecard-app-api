@@ -39,61 +39,58 @@ apiRoute.post(async (req, res) => {
         console.log("reading csv file...")
         const docs = await csv().fromFile(filepath);
         console.log("file read...")
+        const currentSizeGuide = SizeGuidesByBrand.filter((x: any) => x.brand_name === "SOLBARI Sun Protection")[0];
+        const womenSG = currentSizeGuide.women_top;
         docs.forEach(async function (item: any, key: number) {
-            let currentImageArray = [];
-            if (item.merchant_image_url) {
-                currentImageArray.push(item.merchant_image_url);
-            }
-            if (item.alternate_image) {
-                currentImageArray.push(item.alternate_image);
-            }
-            if (item.alternate_image_two) {
-                currentImageArray.push(item.alternate_image_two);
-            }
-            console.log("images:" + currentImageArray);
-            const productName = item.product_name;
-            const productNameArray1 = productName.split(" ");
-            const isWomen = productNameArray1.includes("Women");
-            let productNameArray2 = productName.replaceAll("(", "|");
-            productNameArray2 = productNameArray2.replaceAll(")", "|");
-            productNameArray2 = productNameArray2.split("|");
-            console.log("pna2:" + productNameArray2);
-            const price = item.search_price;
-            const today = new Date();
-            const idObject = {
-                key: "aw_product_id",
-                value: item.aw_product_id
-            }
-            const size = productNameArray2[1];
-            console.log("size:" + size);
-            const color = productNameArray2[2] ? productNameArray2[2] : "n/a";
-            const currentSizeGuide = SizeGuidesByBrand.filter((x) => x.brand_name === item.brand_name)[0];
-            console.log("size guide:" + currentSizeGuide);
-            const currentSizeArray = isWomen ? currentSizeGuide.women_top : currentSizeGuide.men_top;
-            const currentSize = currentSizeArray.filter((x) => x.size_name === size)[0];
-            console.log("current size:" + currentSize);
-            const currentCategory = getGarmentCategory(productName);
-            if (currentSize && currentCategory !== "n/a") {
-                const query = { product_name: productName };
-                const existingProduct = await Product.findOne(query).lean();
-                if (!existingProduct) {
-                    const response = await Product.create({
-                        brand_name: item.brand_name,
-                        product_name: item.product_name,
-                        description: item.description,
-                        gender: isWomen ? "women" : "men",
-                        deep_url: item.aw_deep_link,
-                        product_url: item.merchant_deep_link,
-                        images: currentImageArray,
-                        color: color,
-                        product_id: idObject,
-                        category: currentCategory,
-                        size: currentSize,
-                        price: price,
-                        date_pulled: today.toLocaleDateString(),
-                    });
+            womenSG.forEach(async (x: any) => {
+                let currentImageArray = [];
+                if (item.merchant_image_url) {
+                    currentImageArray.push(item.merchant_image_url);
                 }
-            }
+                if (item.alternate_image) {
+                    currentImageArray.push(item.alternate_image);
+                }
+                if (item.alternate_image_two) {
+                    currentImageArray.push(item.alternate_image_two);
+                }
+                console.log("images:" + currentImageArray);
+                const productName = item.product_name + " - " + x.size_name;
+                const isWomen = item.product_name.includes("Women") || item.product_name.includes("Women's") ? true : false;
+                const price = item.search_price;
+                const today = new Date();
+                const idObject = {
+                    key: "aw_product_id",
+                    value: item.aw_product_id
+                }
+                const color = item.colour;
+                console.log("brand: " + item.brand_name);
+                const currentSizeGuide = SizeGuidesByBrand.filter((x) => x.brand_name === item.brand_name)[0];
+                console.log("size guide:" + currentSizeGuide);
+                const currentSize = x;
+                console.log("current size:" + currentSize);
+                const currentCategory = getGarmentCategory(productName);
+                if (currentSize && currentCategory !== "n/a") {
+                    const query = { product_name: productName };
+                    const existingProduct = await Product.findOne(query).lean();
+                    if (!existingProduct) {
+                        const response = await Product.create({
+                            brand_name: item.brand_name,
+                            product_name: item.product_name,
+                            description: item.description,
+                            gender: isWomen ? "women" : "men",
+                            deep_url: item.aw_deep_link,
+                            product_url: item.merchant_deep_link,
+                            images: currentImageArray,
+                            color: color,
+                            product_id: idObject,
+                            category: currentCategory,
+                            size: currentSize,
+                            price: price,
+                            date_pulled: today.toLocaleDateString(),
+                        });
+                    }
+                }
+            })
         });
 
         unlinkSync(filepath);

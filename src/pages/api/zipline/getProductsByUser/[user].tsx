@@ -26,6 +26,7 @@ export default async function handler(
   try {
     console.log("Fetching products from MongoDB ");
     const productList = await Product.find();
+    console.log("Products: " + productList.length);
     console.log("Fetching user Style Preferences ");
     const userStylePreferences = await StylePreference.findOne({ creator_id: user });
     console.log(userStylePreferences);
