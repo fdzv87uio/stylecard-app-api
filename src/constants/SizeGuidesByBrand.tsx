@@ -435,6 +435,79 @@ export const SizeGuidesByBrand = [
             },
         ]
     },
+    {
+        brand_name: "Ted Baker",
+        men_top: [{
+            size_name: "XS",
+            size_unit: "centimetres",
+            chest: 86,
+            waist: 71,
+            hip: 71,
+        },
+        {
+            size_name: "S",
+            size_unit: "centimetres",
+            chest: 91.5,
+            waist: 76,
+            hip: 76,
+        },
+        {
+            size_name: "M",
+            size_unit: "centimetres",
+            chest: 96.5,
+            waist: 81,
+            hip: 81,
+        },
+        {
+            size_name: "L",
+            size_unit: "centimetres",
+            chest: 101.5,
+            waist: 86.5,
+            hip: 86.5,
+        }, {
+            size_name: "XL",
+            size_unit: "centimetres",
+            chest: 106.5,
+            waist: 91.5,
+            hip: 91.5,
+        }, {
+            size_name: "2XL",
+            size_unit: "centimetres",
+            chest: 111,
+            waist: 96.5,
+            hip: 96.5,
+        }, {
+            size_name: "3XL",
+            size_unit: "centimetres",
+            chest: 117,
+            waist: 101.5,
+            hip: 101.5,
+        },
+        ],
+        women_top: [
+            {
+                size_name: "S",
+                size_unit: "centimetres",
+                chest: 79,
+                waist: 63.5,
+                hip: 88,
+            },
+            {
+                size_name: "M",
+                size_unit: "centimetres",
+                chest: 89,
+                waist: 71,
+                hip: 98,
+            },
+            {
+                size_name: "L",
+                size_unit: "centimetres",
+                chest: 99,
+                waist: 81.5,
+                hip: 108,
+            },
+        ]
+    },
     // {
     //     brand_name: "SOLBARI Sun Protection",
     //     men_top: [{
