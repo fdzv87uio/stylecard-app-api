@@ -15,14 +15,14 @@ export function getZiplineRanking(userMeasurements: any, userStylePreferences: a
         // prepare vars
         const userHip = userMeasurements.hip;
         const sizeGuideHip = itemSize.hip;
-        const betaKey = formattedCategory + "_hip";
-        const hipBeta = userStylePreferences[betaKey];
-        const currentBetaObject = LambdaEquivalenceTable.filter((x) => x.number === hipBeta)[0];
-        const betaRatio = currentBetaObject ? currentBetaObject.ratio : 1;
+        const lambdaKey = formattedCategory + "_hip";
+        const hipLambda = userStylePreferences[lambdaKey];
+        const currentLambdaObject = LambdaEquivalenceTable.filter((x) => x.number === hipLambda)[0];
+        const lambdaRatio = currentLambdaObject ? currentLambdaObject.ratio : 1;
         // calculate Z for hip
-        const hipZ = ((userHip * betaRatio) + sizeGuideHip) / 2;
+        const hipZ = ((userHip * lambdaRatio) + sizeGuideHip) / 2;
         // calculate User Distance from Z
-        const DistanceFromHipZ = (userHip * betaRatio) - hipZ;
+        const DistanceFromHipZ = (userHip * lambdaRatio) - hipZ;
         // get ranking ratio from distance
         const hipRanking = getRankingFromScalar(DistanceFromHipZ, userMeasurements.unit);
         resultObject.hip_ranking = hipRanking ? hipRanking : 0;
@@ -30,14 +30,14 @@ export function getZiplineRanking(userMeasurements: any, userStylePreferences: a
         // prepare vars
         const userChest = userMeasurements.chest;
         const sizeGuideChest = itemSize.chest;
-        const chestBetaKey = formattedCategory + "_chest";
-        const chestBeta = userStylePreferences[chestBetaKey];
-        const currentChestBetaObject = LambdaEquivalenceTable.filter((x) => x.number === chestBeta)[0];
-        const chestBetaRatio = currentChestBetaObject ? currentChestBetaObject.ratio : 1;
+        const chestLambdaKey = formattedCategory + "_chest";
+        const chestLambda = userStylePreferences[chestLambdaKey];
+        const currentChestLambdaObject = LambdaEquivalenceTable.filter((x) => x.number === chestLambda)[0];
+        const chestLambdaRatio = currentChestLambdaObject ? currentChestLambdaObject.ratio : 1;
         // calculate Z for hip
-        const chestZ = ((userChest * chestBetaRatio) + sizeGuideChest) / 2;
+        const chestZ = ((userChest * chestLambdaRatio) + sizeGuideChest) / 2;
         // calculate User Distance from Z
-        const DistanceFromChestZ = (userChest * chestBetaRatio) - chestZ;
+        const DistanceFromChestZ = (userChest * chestLambdaRatio) - chestZ;
         // get ranking ratio from distance
         const chestRanking = getRankingFromScalar(DistanceFromChestZ, userMeasurements.unit);
         resultObject.chest_ranking = chestRanking ? chestRanking : 0;
@@ -45,20 +45,20 @@ export function getZiplineRanking(userMeasurements: any, userStylePreferences: a
         // prepare vars
         const userWaist = userMeasurements.waist;
         const sizeGuideWaist = itemSize.waist;
-        const waistBetaKey = formattedCategory + "_waist";
-        const waistBeta = userStylePreferences[waistBetaKey];
-        const currentWaistBetaObject = LambdaEquivalenceTable.filter((x) => x.number === waistBeta)[0];
-        const waistBetaRatio = currentWaistBetaObject ? currentWaistBetaObject.ratio : 1;
+        const waistLambdaKey = formattedCategory + "_waist";
+        const waistLambda = userStylePreferences[waistLambdaKey];
+        const currentWaistLambdaObject = LambdaEquivalenceTable.filter((x) => x.number === waistLambda)[0];
+        const waistLambdaRatio = currentWaistLambdaObject ? currentWaistLambdaObject.ratio : 1;
         // calculate Z for waist
-        const waistZ = ((userWaist * waistBetaRatio) + sizeGuideWaist) / 2;
+        const waistZ = ((userWaist * waistLambdaRatio) + sizeGuideWaist) / 2;
         // calculate User Distance from Z
-        const DistanceFromWaistZ = (userWaist * waistBetaRatio) - waistZ;
+        const DistanceFromWaistZ = (userWaist * waistLambdaRatio) - waistZ;
         // get ranking ratio from distance
         const waistRanking = getRankingFromScalar(DistanceFromWaistZ, userMeasurements.unit);
         resultObject.waist_ranking = waistRanking ? waistRanking : 0;
 
         //CALCULATE OVERALL AVERAGE
-        if (hipRanking && chestRanking && waistRanking) {
+        if (hipRanking && hipRanking > 0 && chestRanking && chestRanking > 0 && waistRanking && waistRanking > 0) {
             resultObject.ranking_avg = (hipRanking + chestRanking + waistRanking) / 3;
         } else {
             resultObject.ranking_avg = 0;
@@ -75,21 +75,9 @@ function getRankingFromScalar(value: number, unit: string) {
     if (unit === "centimeters") {
         currentValue = value * 0.393701;
     }
-    if (currentValue < -2) {
+    if (currentValue < -3 || currentValue > 0) {
         return 0;
-    } else if (currentValue > 0) {
-        return 0;
-    } else if (currentValue >= -2 && currentValue < -1.5) {
-        return 0.25;
-    } else if (currentValue >= -1.5 && currentValue < -1) {
-        return 0.5;
-    } else if (currentValue >= -1 && currentValue < -0.5) {
-        return 0.75;
-    } else if (currentValue >= -0.5 && currentValue < 0) {
-        return 1;
-    } else if (currentValue === 0) {
-        return 1;
     } else {
-        return 0;
+        return (value * -1) / 3
     }
 }

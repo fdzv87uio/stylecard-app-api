@@ -33,7 +33,7 @@ export default async function handler(
         creation_date: today,
       });
       console.log("New user Created");
-      return res.status(201).json({ status: "success", data: newUser });
+      return res.status(201).json({ status: "success" });
     } catch (error) {
       res.status(409).json({
         error: "An error occurred while creating user: " + error,
