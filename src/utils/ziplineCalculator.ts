@@ -80,6 +80,6 @@ function getRankingFromScalar(value: number, unit: string) {
     } else if (currentValue > 0) {
         return 0;
     } else {
-        return (currentValue * -1) / 3
+        return (1 - (currentValue * -1) / 3)
     }
 }
