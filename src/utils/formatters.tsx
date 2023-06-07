@@ -46,6 +46,8 @@ export function getGarmentCategory(productName: string) {
   const nameArray = formatted.split(" ");
   if (nameArray.includes("jacket")) {
     return "jacket";
+  } else if (nameArray.includes("shacket")) {
+    return "jacket";
   } else if (nameArray.includes("parka")) {
     return "parka";
   } else if (nameArray.includes("gilet")) {
@@ -63,6 +65,8 @@ export function getGarmentCategory(productName: string) {
   } else if (nameArray.includes("tee")) {
     return "t-shirt";
   } else if (nameArray.includes("top")) {
+    return "shirt";
+  } else if (nameArray.includes("romper")) {
     return "shirt";
   } else if (nameArray.includes("t-shirt")) {
     return "t-shirt";

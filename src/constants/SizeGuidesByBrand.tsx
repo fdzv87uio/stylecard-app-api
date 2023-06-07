@@ -508,6 +508,53 @@ export const SizeGuidesByBrand = [
             },
         ]
     },
+    {
+        brand_name: "Dresslily",
+        men_top: [{
+            size_name: "N/A",
+            size_unit: "centimetres",
+            chest: 0,
+            waist: 0,
+            hip: 0,
+        }],
+        women_top: [
+            {
+                size_name: "S",
+                size_unit: "centimetres",
+                chest: 84,
+                waist: 66,
+                hip: 90,
+            },
+            {
+                size_name: "M",
+                size_unit: "centimetres",
+                chest: 88,
+                waist: 70,
+                hip: 94,
+            },
+            {
+                size_name: "L",
+                size_unit: "centimetres",
+                chest: 92,
+                waist: 74,
+                hip: 98,
+            },
+            {
+                size_name: "XL",
+                size_unit: "centimetres",
+                chest: 96,
+                waist: 78,
+                hip: 102,
+            },
+            {
+                size_name: "XXL",
+                size_unit: "centimetres",
+                chest: 100,
+                waist: 82,
+                hip: 106,
+            },
+        ]
+    },
     // {
     //     brand_name: "SOLBARI Sun Protection",
     //     men_top: [{
