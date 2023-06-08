@@ -78,6 +78,12 @@ export function getGarmentCategory(productName: string) {
     return "bra";
   } else if (nameArray.includes("dress")) {
     return "dress";
+  } else if (nameArray.includes("dresses")) {
+    return "dress";
+  } else if (nameArray.includes("blouse")) {
+    return "shirt";
+  } else if (nameArray.includes("blouses")) {
+    return "shirt";
   } else {
     return "n/a"
   }
