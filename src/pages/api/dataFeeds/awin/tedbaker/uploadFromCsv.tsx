@@ -104,7 +104,7 @@ apiRoute.post(async (req, res) => {
             console.log("file erased");
             res.status(200).json({ status: "Update Complete", lines_processed: docLen, update_count: newProducts.length, error_count: errorCount, });
         } else {
-            res.status(409).json({ status: "Update Failed", lines_processed: docLen, update_count: newProducts.length, error_count: errorCount, });
+            res.status(403).json({ status: "Update Failed", lines_processed: docLen, update_count: newProducts.length, error_count: errorCount, });
         }
 
     } catch (error: any) {
