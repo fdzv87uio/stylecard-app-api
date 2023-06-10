@@ -34,7 +34,7 @@ export default async function handler(
             hip: userResponse.hips,
             unit: userResponse.units,
         };
-        const currentZiplineResult = getZiplineRanking(userMeasurements, userStylePreferences, productResponse[0]);
+        const currentZiplineResult = getZiplineRanking(userMeasurements, userStylePreferences, productResponse);
         let resultObject = { item: productResponse, ranking: currentZiplineResult };
         return res.status(200).json({ status: "success", data: resultObject });
         // if (productResponse.length === 1) {
@@ -74,7 +74,7 @@ export default async function handler(
         // }
     } catch (error) {
         res.status(409).json({
-            error: "An error occurred while creating user: " + error,
+            error: "An error occurred while fetching product: " + error,
         });
     }
 }
