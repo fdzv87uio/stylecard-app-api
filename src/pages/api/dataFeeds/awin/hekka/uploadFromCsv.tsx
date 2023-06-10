@@ -62,7 +62,7 @@ apiRoute.post(async (req, res) => {
             }
             const size = item.custom_4.toUpperCase();
             console.log("size:" + size);
-            const color = item.colour;
+            const color = item.colour ? item.colour : "n/a";
             const currentSizeGuide = SizeGuidesByBrand.filter((x) => x.brand_name === item.custom_1)[0];
             console.log("size guide:" + currentSizeGuide);
             const currentSizeArray = isWomen ? currentSizeGuide.women_top : currentSizeGuide.men_top;

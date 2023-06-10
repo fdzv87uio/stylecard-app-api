@@ -74,7 +74,7 @@ apiRoute.post(async (req, res) => {
                 if (!existingProduct) {
                     const response = await Product.create({
                         brand_name: item.brand_name,
-                        product_name: item.product_name,
+                        product_name: productName,
                         description: item.description,
                         gender: isWomen ? "women" : "men",
                         deep_url: item.aw_deep_link,

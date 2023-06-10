@@ -2,7 +2,6 @@ import nextConnect from "next-connect";
 //@ts-ignore
 import multer from "multer";
 import csv from "csvtojson";
-import { ConnectOpenAi } from "@/utils/openaiUtils";
 import { getGarmentCategory } from "@/utils/formatters";
 import Product from "@/models/Product";
 import { connectMongoose } from "@/utils/connectMongoose";
@@ -38,7 +37,7 @@ apiRoute.post(async (req, res) => {
         const filepath = "./public/uploads/" + file_name;
         console.log("reading csv file...")
         const docs = await csv().fromFile(filepath);
-        console.log("file read...")
+        console.log("file read...");
         docs.forEach(async function (item: any, key: number) {
             let currentImageArray = [];
             if (item.merchant_image_url) {
@@ -51,13 +50,14 @@ apiRoute.post(async (req, res) => {
                 currentImageArray.push(item.alternate_image_two);
             }
             console.log("images:" + currentImageArray);
-            const productName = item.product_name;
             const isWomen = item["Fashion:suitable_for"] === "Female" ? true : false;
             let sizeString = item["Fashion:size"] ? item["Fashion:size"] : "n/a";
             sizeString = sizeString.replaceAll("(", "|");
             sizeString = sizeString.replaceAll(")", "|");
             const sizeArray = sizeString.split("|");
             const size = sizeArray[1];
+            const color = item.colour;
+            const productName = item.product_name + " - " + size;
             const price = item.search_price;
             const today = new Date();
             const idObject = {
@@ -65,13 +65,13 @@ apiRoute.post(async (req, res) => {
                 value: item.aw_product_id
             }
             console.log("size:" + size);
-            const color = item.colour;
+
             const currentSizeGuide = SizeGuidesByBrand.filter((x) => x.brand_name === item.brand_name)[0];
             console.log("size guide:" + currentSizeGuide);
             const currentSizeArray = isWomen ? currentSizeGuide.women_top : currentSizeGuide.men_top;
             const currentSize = currentSizeArray.filter((x) => x.size_name === size)[0];
             console.log("current size:" + currentSize);
-            const currentCategory = getGarmentCategory(productName);
+            const currentCategory = getGarmentCategory(item.product_name);
             console.log("BN:" + item.brand_name);
             if (currentSize && currentCategory !== "n/a") {
                 const query = { product_name: productName };
@@ -79,7 +79,7 @@ apiRoute.post(async (req, res) => {
                 if (!existingProduct) {
                     const response = await Product.create({
                         brand_name: item.brand_name,
-                        product_name: item.product_name,
+                        product_name: productName,
                         description: item.description,
                         gender: isWomen ? "women" : "men",
                         deep_url: item.aw_deep_link,
@@ -92,14 +92,13 @@ apiRoute.post(async (req, res) => {
                         price: price,
                         date_pulled: today.toLocaleDateString(),
                     });
+
                 }
             }
         });
-
         unlinkSync(filepath);
         console.log("file erased");
         res.status(200).json({ status: "success" });
-
     } catch (error: any) {
         res.status(409).json({ error: error.message });
     }

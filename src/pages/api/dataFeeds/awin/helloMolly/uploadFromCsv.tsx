@@ -39,7 +39,7 @@ apiRoute.post(async (req, res) => {
         console.log("reading csv file...")
         const docs = await csv().fromFile(filepath);
         console.log("file read...")
-        const currentSizeGuide = SizeGuidesByBrand.filter((x: any) => x.brand_name === "SOLBARI Sun Protection")[0];
+        const currentSizeGuide = SizeGuidesByBrand.filter((x: any) => x.brand_name === "Hello Molly")[0];
         const womenSG = currentSizeGuide.women_top;
         docs.forEach(async function (item: any, key: number) {
             womenSG.forEach(async (x: any) => {
@@ -62,7 +62,7 @@ apiRoute.post(async (req, res) => {
                     key: "aw_product_id",
                     value: item.aw_product_id
                 }
-                const color = item.colour;
+                const color = item.colour ? item.colour : "n/a";
                 console.log("brand: " + item.brand_name);
                 const currentSizeGuide = SizeGuidesByBrand.filter((x) => x.brand_name === item.brand_name)[0];
                 console.log("size guide:" + currentSizeGuide);
@@ -75,7 +75,7 @@ apiRoute.post(async (req, res) => {
                     if (!existingProduct) {
                         const response = await Product.create({
                             brand_name: item.brand_name,
-                            product_name: item.product_name,
+                            product_name: productName,
                             description: item.description,
                             gender: isWomen ? "women" : "men",
                             deep_url: item.aw_deep_link,
