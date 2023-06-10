@@ -19,7 +19,7 @@ export default async function handler(
     try {
         console.log("Fetching Product");
         const filterProduct = { product_url: product_url };
-        const productResponse: any = await Product.find(filterProduct);
+        const productResponse: any = await Product.findOne(filterProduct);
         console.log(productResponse);
         console.log("Fetching User");
         const filterUser = { _id: user_id };
