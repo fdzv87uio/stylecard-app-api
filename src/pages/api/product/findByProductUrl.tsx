@@ -37,41 +37,6 @@ export default async function handler(
         const currentZiplineResult = getZiplineRanking(userMeasurements, userStylePreferences, productResponse);
         let resultObject = { item: productResponse, ranking: currentZiplineResult };
         return res.status(200).json({ status: "success", data: resultObject });
-        // if (productResponse.length === 1) {
-        //     const userMeasurements = {
-        //         chest: userResponse.chest,
-        //         waist: userResponse.waist,
-        //         hip: userResponse.hips,
-        //         unit: userResponse.units,
-        //     };
-        //     const currentZiplineResult = getZiplineRanking(userMeasurements, userStylePreferences, productResponse[0]);
-        //     let resultObject = { item: productResponse, ranking: currentZiplineResult };
-        //     return res.status(200).json({ status: "success", data: resultObject });
-        // } else if (productResponse.length > 1) {
-        //     let resultArray: any = [];
-        //     productResponse.forEach((item: any) => {
-        //         const userMeasurements = {
-        //             chest: userResponse.chest,
-        //             waist: userResponse.waist,
-        //             hip: userResponse.hips,
-        //             unit: userResponse.units,
-        //         };
-        //         const currentZiplineResult = getZiplineRanking(userMeasurements, userStylePreferences, item);
-        //         let resultObject = { item: productResponse, ranking: currentZiplineResult };
-        //         resultArray.push(resultObject);
-        //     })
-        //     resultArray.sort(function (a: any, b: any) {
-        //         if (a.ranking.ranking_avg > b.ranking.ranking_avg) {
-        //             return -1;
-        //         }
-        //         if (a.ranking.ranking_avg < b.ranking.ranking_avg) {
-        //             return 1;
-        //         }
-        //         // names must be equal
-        //         return 0;
-        //     });
-        //     return res.status(200).json({ status: "success", data: resultArray[0] });
-        // }
     } catch (error) {
         res.status(409).json({
             error: "An error occurred while fetching product: " + error,
