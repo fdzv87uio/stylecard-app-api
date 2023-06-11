@@ -60,11 +60,11 @@ export default async function handler(
           }
         });
         return res.status(200).json({ status: "success", data: orderedResultArray });
-      } else {
-        return res.status(404).json({ status: "error", message: "No Positive Matches Found" });
       }
-
     })
+    if (productList.length > 0) {
+      return res.status(404).json({ status: "error", message: "No Positive Ranking Available" });
+    }
 
   } catch (error: any) {
     res.status(409).json({
