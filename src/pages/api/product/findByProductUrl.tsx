@@ -19,7 +19,7 @@ export default async function handler(
     try {
         console.log("Fetching Product");
         const filterProduct = { product_url: product_url };
-        const productResponse: any = await Product.findOne(filterProduct);
+        const productResponse: any = await Product.find(filterProduct);
         console.log(productResponse);
         console.log("Fetching User");
         const filterUser = { _id: user_id };
@@ -34,9 +34,31 @@ export default async function handler(
             hip: userResponse.hips,
             unit: userResponse.units,
         };
-        const currentZiplineResult = getZiplineRanking(userMeasurements, userStylePreferences, productResponse);
-        let resultObject = { item: productResponse, ranking: currentZiplineResult };
-        return res.status(200).json({ status: "success", data: resultObject });
+        if (productResponse.length === 1) {
+
+            const currentZiplineResult = getZiplineRanking(userMeasurements, userStylePreferences, productResponse[0]);
+            let resultObject = { item: productResponse, ranking: currentZiplineResult };
+            return res.status(200).json({ status: "success", data: resultObject });
+        } else if (productResponse.length > 1) {
+
+            let orderedList: any[] = [];
+            productResponse.forEach((item: any) => {
+                const newRanking = getZiplineRanking(userMeasurements, userStylePreferences, item);
+                let resultObject = { item: item, ranking: newRanking };
+                orderedList.push(resultObject);
+            })
+            orderedList.sort((a: any, b: any) => {
+                if (a.ranking.ranking_avg > b.ranking.ranking_avg) {
+                    return -1;
+                } else if (a.ranking.ranking_avg < b.ranking.ranking_avg) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            return res.status(200).json({ status: "success", data: orderedList[0] });
+        }
+
     } catch (error) {
         res.status(409).json({
             error: "An error occurred while fetching product: " + error,
