@@ -2,7 +2,6 @@ import nextConnect from "next-connect";
 //@ts-ignore
 import multer from "multer";
 import csv from "csvtojson";
-import { ConnectOpenAi } from "@/utils/openaiUtils";
 import { getGarmentCategory } from "@/utils/formatters";
 import Product from "@/models/Product";
 import { connectMongoose } from "@/utils/connectMongoose";
@@ -39,6 +38,10 @@ apiRoute.post(async (req, res) => {
     console.log("reading csv file...")
     const docs = await csv().fromFile(filepath);
     console.log("file read...")
+    let errorCount = 0;
+    let docLen = docs.length;
+    let newProducts: any[] = [];
+    const currentProducts = await Product.find();
     docs.forEach(async function (item: any, key: number) {
       let currentImageArray = [];
       if (item.merchant_image_url) {
@@ -67,38 +70,43 @@ apiRoute.post(async (req, res) => {
       const size = productNameArray2[1];
       console.log("size:" + size);
       const color = productNameArray2[2] ? productNameArray2[2] : "n/a";
+      const existingProduct = currentProducts.filter((x: any) => x.product_name === productName)[0];
       const currentSizeGuide = SizeGuidesByBrand.filter((x) => x.brand_name === item.brand_name)[0];
       console.log("size guide:" + currentSizeGuide);
       const currentSizeArray = isWomen ? currentSizeGuide.women_top : currentSizeGuide.men_top;
       const currentSize = currentSizeArray.filter((x) => x.size_name === size)[0];
       console.log("current size:" + currentSize);
       const currentCategory = getGarmentCategory(productName);
-      if (currentSize && currentCategory !== "n/a") {
-        const query = { product_name: productName };
-        const existingProduct = await Product.findOne(query).lean();
-        if (!existingProduct) {
-          const response = await Product.create({
-            brand_name: item.brand_name,
-            product_name: item.product_name,
-            description: item.description,
-            gender: isWomen ? "women" : "men",
-            deep_url: item.aw_deep_link,
-            product_url: item.merchant_deep_link,
-            images: currentImageArray,
-            color: color,
-            product_id: idObject,
-            category: currentCategory,
-            size: currentSize,
-            price: price,
-            date_pulled: today.toLocaleDateString(),
-          });
-        }
+      if (currentSize && currentCategory !== "n/a" && !existingProduct) {
+        const newProduct: any = {
+          brand_name: item.brand_name,
+          product_name: productName + " - " + size,
+          description: item.description,
+          gender: isWomen ? "women" : "men",
+          deep_url: item.aw_deep_link,
+          product_url: item.merchant_deep_link,
+          images: currentImageArray,
+          color: color,
+          product_id: idObject,
+          category: currentCategory,
+          size: currentSize,
+          price: price,
+          date_pulled: today.toLocaleDateString(),
+        };
+        newProducts.push(newProduct);
+      } else {
+        errorCount = errorCount + 1;
       }
     });
 
-    unlinkSync(filepath);
-    console.log("file erased");
-    res.status(200).json({ status: "success" });
+    if (newProducts.length > 0) {
+      await Product.create(newProducts);
+      unlinkSync(filepath);
+      console.log("file erased");
+      res.status(200).json({ status: "Update Complete", lines_processed: docLen, update_count: newProducts.length, error_count: errorCount, });
+    } else {
+      res.status(403).json({ status: "Update Failed", lines_processed: docLen, update_count: newProducts.length, error_count: errorCount, });
+    }
 
   } catch (error: any) {
     res.status(409).json({ error: error.message });

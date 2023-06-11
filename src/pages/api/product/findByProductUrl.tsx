@@ -37,7 +37,7 @@ export default async function handler(
         if (productResponse.length === 1) {
 
             const currentZiplineResult = getZiplineRanking(userMeasurements, userStylePreferences, productResponse[0]);
-            let resultObject = { item: productResponse, ranking: currentZiplineResult };
+            let resultObject = { item: productResponse[0], ranking: currentZiplineResult };
             return res.status(200).json({ status: "success", data: resultObject });
         } else if (productResponse.length > 1) {
 
@@ -57,6 +57,10 @@ export default async function handler(
                 }
             });
             return res.status(200).json({ status: "success", data: orderedList[0] });
+        } else {
+            res.status(403).json({
+                status: "error", message: "Url Not Found",
+            });
         }
 
     } catch (error) {
