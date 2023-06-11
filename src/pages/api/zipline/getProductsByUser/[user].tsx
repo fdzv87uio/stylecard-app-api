@@ -25,7 +25,7 @@ export default async function handler(
     res.status(405).json({ error: "Html Method not allowed" });
   try {
     console.log("Fetching products from MongoDB ");
-    const productList = await Product.find();
+    const productList = await Product.find().limit(1000);
     console.log("Products: " + productList.length);
     console.log("Fetching user Style Preferences ");
     const userStylePreferences = await StylePreference.findOne({ creator_id: user });
