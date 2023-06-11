@@ -31,7 +31,8 @@ export default async function handler(
     const userStylePreferences = await StylePreference.findOne({ creator_id: user });
     console.log(userStylePreferences);
     let resultArray: any[] = [];
-    productList.forEach((item: any) => {
+    let orderedResultArray: any[] = [];
+    productList.forEach((item: any, key: number) => {
       const userMeasurements = {
         chest: currentUser.chest,
         waist: currentUser.waist,
@@ -40,10 +41,31 @@ export default async function handler(
       };
       const currentZiplineResult: any = getZiplineRanking(userMeasurements, userStylePreferences, item);
       let resultObject = { item: item, ranking: currentZiplineResult };
-      resultArray.push(resultObject);
+      if (resultObject.ranking.ranking_avg > 0) {
+        resultArray.push(resultObject);
+      }
+      if (key === productList.length - 1) {
+        resultArray.sort((a: any, b: any) => {
+          if (a.ranking.ranking_avg > b.ranking.ranking_avg) {
+            return -1;
+          } else if (a.ranking.ranking_avg < b.ranking.ranking_avg) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+        resultArray.forEach((y: any, key: number) => {
+          if (key <= 199) {
+            orderedResultArray.push(y);
+          }
+        });
+        return res.status(200).json({ status: "success", data: orderedResultArray });
+      } else {
+        return res.status(404).json({ status: "error", message: "No Positive Matches Found" });
+      }
 
     })
-    return res.status(200).json({ status: "success", data: resultArray });
+
   } catch (error: any) {
     res.status(409).json({
       error: error.message,
