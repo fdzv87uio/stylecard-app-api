@@ -5,6 +5,7 @@ import User from "@/models/User";
 import Product from "@/models/Product";
 import StylePreference from "@/models/StylePreference";
 import { getZiplineRanking } from "@/utils/ziplineCalculator";
+import { getAllCachedProducts } from "@/utils/productCache";
 
 export default async function handler(
   req: NextApiRequest,
@@ -24,12 +25,11 @@ export default async function handler(
   if (req.method !== "GET")
     res.status(405).json({ error: "Html Method not allowed" });
   try {
-    console.log("Fetching products from MongoDB ");
-    const productList = await Product.find().limit(1000);
-    console.log("Products: " + productList.length);
     console.log("Fetching user Style Preferences ");
     const userStylePreferences = await StylePreference.findOne({ creator_id: user });
     console.log(userStylePreferences);
+    console.log("Fetching products from MongoDB ");
+    const productList = await getAllCachedProducts(currentUser.gender);
     let resultArray: any[] = [];
     let orderedResultArray: any[] = [];
     productList.forEach((item: any, key: number) => {
@@ -59,12 +59,14 @@ export default async function handler(
             orderedResultArray.push(y);
           }
         });
-        return res.status(200).json({ status: "success", data: orderedResultArray });
+        if (orderedResultArray.length > 0) {
+          return res.status(200).json({ status: "success", data: orderedResultArray });
+        } else {
+          return res.status(404).json({ status: "error", message: "No Positive Ranking Available" });
+        };
       }
     })
-    if (productList.length > 0) {
-      return res.status(404).json({ status: "error", message: "No Positive Ranking Available" });
-    }
+
 
   } catch (error: any) {
     res.status(409).json({
