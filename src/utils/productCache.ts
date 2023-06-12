@@ -10,7 +10,8 @@ export async function getAllCachedProducts(gender: string) {
         return cachedProducts; // Prefer cached connection
     }
     // if not cached
-    const productList = await Product.aggregate([{ $sample: { size: 1000 } }]);
+    const productList = await Product.find().lean();
+    // const productList = await Product.aggregate([{ $sample: { size: 1000 } }]);
     const filtered = productList.filter((x: any) => x.gender === gender);
     console.log("using new DB Products");
     cachedProducts = filtered;
