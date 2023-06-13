@@ -9,10 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@material-ui/icons": "^4.11.3",
-    "@mui/material": "^5.13.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.11.9",
     "@next-auth/mongodb-adapter": "^1.1.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie": "^0.5.1",
