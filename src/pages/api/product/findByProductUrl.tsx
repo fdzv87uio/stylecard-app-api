@@ -58,8 +58,8 @@ export default async function handler(
             });
             return res.status(200).json({ status: "success", data: orderedList[0] });
         } else {
-            res.status(403).json({
-                status: "error", message: "Url Not Found",
+            res.status(200).json({
+                status: "success", data: [],
             });
         }
 
