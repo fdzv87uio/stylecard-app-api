@@ -26,7 +26,8 @@ export default async function handler(
         console.log("User Fetched");
         console.log("Fetching Product");
         const productList = await getAllCachedProducts(userResponse.gender);
-        const productResponse = productList.filter((x: any) => x.product_url.includes(product_url))
+        const urlArray = product_url.split("?");
+        const productResponse = productList.filter((x: any) => x.product_url.includes(urlArray[0]))
         console.log("Fetching user Style Preferences ");
         const userStylePreferences = await StylePreference.findOne({ creator_id: user_id });
         console.log("SP Fetched");
