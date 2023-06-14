@@ -107,12 +107,12 @@ function UserSignIn({
       <BodyTwoText variant="body2">{errorMsg}</BodyTwoText>
       {showSignUpMsg && (
         <BodyTwoText style={{ color: "green" }} variant="body2">
-          Great job! Use your credentials to sign in.
+          ✅ Great job! Use your credentials to sign in.
         </BodyTwoText>
       )}
-      {showSignUpMsg && (
+      {showSignInMsg && (
         <BodyTwoText style={{ color: "green" }} variant="body2">
-          Perfect! Now you can use your new credentials to access the stylecard browser extension.
+          ✅ Perfect! Now you can use your new credentials to access the stylecard browser extension.
         </BodyTwoText>
       )}
       {!loading && (
