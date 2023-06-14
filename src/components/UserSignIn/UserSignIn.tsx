@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import CustomCTAButton from "../../components/CustomCTAButton/CustomCTAButton";
 import CustomTextInput from "../../components/CustomTextInput/CustomTextInput";
 import { SignIn } from "../../utils/UserAuth";
+import { setCookie } from "@/utils/cookies";
 
 interface UserSignInProps {
   setCurrentView: any;
@@ -33,12 +34,21 @@ function UserSignIn({
   }, [signUpOk]);
 
   useEffect(() => {
+    if (showSignInMsg) {
+      setTimeout(() => {
+        setShowSignInMsg(false);
+      }, 6000);
+    }
+  }, [showSignInMsg]);
+
+  useEffect(() => {
     if (errorMsg !== "") {
       setTimeout(() => {
         setErrorMsg("");
       }, 3000);
     }
   }, [errorMsg]);
+
 
   async function handleSubmit() {
     setErrorMsg("");
@@ -48,7 +58,7 @@ function UserSignIn({
       const res: any = await SignIn(email, password);
       console.log("user validated...");
       const tokenString = res.data.token;
-      window.localStorage.setItem("stylecard-token", tokenString);
+      setCookie("stylecard-token", tokenString);
       setLoading(false);
       setShowSignInMsg(true);
     } catch (error: any) {
@@ -100,9 +110,9 @@ function UserSignIn({
           Great job! Use your credentials to sign in.
         </BodyTwoText>
       )}
-      {showSignInMsg && (
+      {showSignUpMsg && (
         <BodyTwoText style={{ color: "green" }} variant="body2">
-          Perfect! Now you can access your stylecard browser extension.
+          Perfect! Now you can use your new credentials to access the stylecard browser extension.
         </BodyTwoText>
       )}
       {!loading && (
@@ -181,7 +191,7 @@ const ButtonWrapper = styled(Box)(({ theme }) => ({
 
 const BodyTwoText = styled(Typography)(({ theme }) => ({
   textAlign: "left",
-  margin: "5px 0px",
+  margin: "5px 0px 10px 0px",
   minHeight: "30px",
   color: "red",
 }));
