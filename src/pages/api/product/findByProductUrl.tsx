@@ -5,6 +5,7 @@ import Product from "@/models/Product";
 import StylePreference from "@/models/StylePreference";
 import User from "@/models/User";
 import { getZiplineRanking } from "@/utils/ziplineCalculator";
+import { getAllCachedProducts } from "@/utils/productCache";
 
 export default async function handler(
     req: NextApiRequest,
@@ -17,14 +18,15 @@ export default async function handler(
     if (req.method !== "POST")
         res.status(405).json({ error: "Html Method not allowed" });
     try {
-        console.log("Fetching Product");
-        const filterProduct = { product_url: product_url };
-        const productResponse: any = await Product.find(filterProduct);
-        console.log(productResponse);
+
+
         console.log("Fetching User");
         const filterUser = { _id: user_id };
         const userResponse: any = await User.findOne(filterUser);
         console.log("User Fetched");
+        console.log("Fetching Product");
+        const productList = await getAllCachedProducts(userResponse.gender);
+        const productResponse = productList.filter((x: any) => x.product_url.includes(product_url))
         console.log("Fetching user Style Preferences ");
         const userStylePreferences = await StylePreference.findOne({ creator_id: user_id });
         console.log("SP Fetched");
