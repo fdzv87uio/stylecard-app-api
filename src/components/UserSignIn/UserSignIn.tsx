@@ -21,6 +21,7 @@ function UserSignIn({
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [showSignUpMsg, setShowSignUpMsg] = useState(false);
+  const [showSignInMsg, setShowSignInMsg] = useState(false);
 
   useEffect(() => {
     if (signUpOk) {
@@ -40,28 +41,27 @@ function UserSignIn({
   }, [errorMsg]);
 
   async function handleSubmit() {
-    setErrorMsg("❌ Network Error");
-    // setErrorMsg("");
-    // setLoading(true);
-    // try {
-    //   console.log("validating user...");
-    //   const res: any = await SignIn(email, password);
-    //   console.log("user validated...");
-    //   const tokenString = res.data.token;
-    //   window.localStorage.setItem("stylecard-token", tokenString);
-    //   setLoading(false);
-    //   setCurrentView(666);
-    // } catch (error: any) {
-    //   setLoading(false);
-    //   console.log(error);
-    //   if (error.message === "Request failed with status code 409") {
-    //     setErrorMsg("❌ Network Error");
-    //   } else if (error.message === "Request failed with status code 403") {
-    //     setErrorMsg("❌ Invalid Credentials");
-    //   } else {
-    //     setErrorMsg(error.message);
-    //   }
-    // }
+    setErrorMsg("");
+    setLoading(true);
+    try {
+      console.log("validating user...");
+      const res: any = await SignIn(email, password);
+      console.log("user validated...");
+      const tokenString = res.data.token;
+      window.localStorage.setItem("stylecard-token", tokenString);
+      setLoading(false);
+      setShowSignInMsg(true);
+    } catch (error: any) {
+      setLoading(false);
+      console.log(error);
+      if (error.message === "Request failed with status code 409") {
+        setErrorMsg("❌ Network Error");
+      } else if (error.message === "Request failed with status code 403") {
+        setErrorMsg("❌ Invalid Credentials");
+      } else {
+        setErrorMsg(error.message);
+      }
+    }
   }
   return (
     <AppContainer>
@@ -98,6 +98,11 @@ function UserSignIn({
       {showSignUpMsg && (
         <BodyTwoText style={{ color: "green" }} variant="body2">
           Great job! Use your credentials to sign in.
+        </BodyTwoText>
+      )}
+      {showSignInMsg && (
+        <BodyTwoText style={{ color: "green" }} variant="body2">
+          Perfect! Now you can access your stylecard browser extension.
         </BodyTwoText>
       )}
       {!loading && (
