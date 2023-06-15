@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Box, styled, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CustomCTAButton from "../CustomCTAButton/CustomCTAButton";
