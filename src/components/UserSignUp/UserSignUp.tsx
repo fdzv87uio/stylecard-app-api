@@ -16,6 +16,7 @@ function UserSignUp({ setCurrentView, setSignUpOk }: UserSignInProps) {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [showSignUpMsg, setShowSignUpMsg] = useState(false);
 
   useEffect(() => {
     if (errorMsg !== "") {
@@ -94,6 +95,11 @@ function UserSignUp({ setCurrentView, setSignUpOk }: UserSignInProps) {
         type="password"
       />
       <BodyTwoText variant="body2">{errorMsg}</BodyTwoText>
+      {showSignUpMsg && (
+        <BodyTwoText style={{ color: "green" }} variant="body2">
+          Great job! Use your credentials to sign in.
+        </BodyTwoText>
+      )}
       {!loading && (
         <CustomCTAButton
           onClick={() => {
