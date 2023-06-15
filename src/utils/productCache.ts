@@ -9,11 +9,15 @@ export async function getAllCachedProducts(gender: string) {
         console.log("using cached DB Products");
         return cachedProducts; // Prefer cached connection
     }
-    // if not cached
-    const productList = await Product.find().lean();
-    // const productList = await Product.aggregate([{ $sample: { size: 1000 } }]);
-    const filtered = productList.filter((x: any) => x.gender === gender);
+    const productList1 = await Product.aggregate([{ $match: { $and: [{ brand_name: { $eq: "Gant" } }, { gender: { $eq: gender } }] } }, { $sample: { size: 500 } }]);
+    const productList2 = await Product.aggregate([{ $match: { $and: [{ brand_name: { $eq: "Dresslily" } }, { gender: { $eq: gender } }] } }, { $sample: { size: 500 } }]);
+    const productList3 = await Product.aggregate([{ $match: { $and: [{ brand_name: { $eq: "Joules" } }, { gender: { $eq: gender } }] } }, { $sample: { size: 500 } }]);
+    const productList4 = await Product.aggregate([{ $match: { $and: [{ brand_name: { $eq: "Ted Baker" } }, { gender: { $eq: gender } }] } }, { $sample: { size: 500 } }]);
+    const productList5 = await Product.aggregate([{ $match: { $and: [{ brand_name: { $eq: "Hello Molly" } }, { gender: { $eq: gender } }] } }, { $sample: { size: 500 } }]);
+    const productList6 = await Product.aggregate([{ $match: { $and: [{ brand_name: { $eq: "Sweaty Betty" } }, { gender: { $eq: gender } }] } }, { $sample: { size: 500 } }]);
+    const productList = productList1.concat(productList2, productList3, productList4, productList5, productList6);
     console.log("using new DB Products");
-    cachedProducts = filtered;
-    return filtered;
+    console.log(productList);
+    cachedProducts = productList;
+    return productList;
 }

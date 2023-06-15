@@ -7,6 +7,7 @@ import StylePreference from "@/models/StylePreference";
 import { getZiplineRanking } from "@/utils/ziplineCalculator";
 import { getAllCachedProducts } from "@/utils/productCache";
 
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

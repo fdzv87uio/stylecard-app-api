@@ -24,12 +24,13 @@ export default async function handler(
         const filterUser = { _id: user_id };
         const userResponse: any = await User.findOne(filterUser);
         console.log("User Fetched");
-        console.log("Fetching Product");
-        const productList = await getAllCachedProducts(userResponse.gender);
         const urlArray = product_url.split("?");
-        const productResponse = productList.filter((x: any) => x.product_url.includes(urlArray[0]))
         console.log("Fetching user Style Preferences ");
         const userStylePreferences = await StylePreference.findOne({ creator_id: user_id });
+        console.log("Fetching Product");
+        //const productList = await getAllCachedProducts(userResponse.gender);
+        //const productResponse = productList.filter((x: any) => x.product_url.includes(urlArray[0]));
+        const productResponse = await Product.find({ product_url: { $regex: urlArray[0], $options: "i" } })
         console.log("SP Fetched");
         const userMeasurements = {
             chest: userResponse.chest,
