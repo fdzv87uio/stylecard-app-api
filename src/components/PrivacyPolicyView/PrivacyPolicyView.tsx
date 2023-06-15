@@ -405,8 +405,8 @@ function PrivacyPolicyView() {
                 <p><strong>Exercising Your CCPA Data Protection Rights</strong></p>
                 <p>In order to exercise any of Your rights under the CCPA, and if You are a California resident, You can contact Us:</p>
                 <ul>
-                    <li>By visiting this page on our website: [___WEBSITE_CONTACT_PAGE_URL___]</li>
-                    <li>By sending us an email: [___WEBSITE_CONTACT_EMAIL___]</li>
+                    <li>By visiting this page on our website: <a href="https://stylecard-api.herokuapp.com/">https://stylecard-api.herokuapp.com/</a></li>
+                    <li>By sending us an email: <a href="mailto:fausto@gostylecard.com">fausto@gostylecard.com</a></li>
                 </ul>
                 <p>Only You, or a person registered with the California Secretary of State that You authorize to act on Your behalf, may make a verifiable request related to Your personal information.</p>
                 <p>Your request to Us must:</p>
@@ -464,8 +464,8 @@ function PrivacyPolicyView() {
                 <p><strong>Contact Us</strong></p>
                 <p>If you have any questions about this Privacy Policy, You can contact us:</p>
                 <ul>
-                    <li>By visiting this page on our website: https://stylecard-api.herokuapp.com/</li>
-                    <li>By sending us an email: fausto@gostylecard.com</li>
+                    <li>By visiting this page on our website: <a href="https://stylecard-api.herokuapp.com/">https://stylecard-api.herokuapp.com/</a></li>
+                    <li>By sending us an email: <a href="mailto:fausto@gostylecard.com">fausto@gostylecard.com</a></li>
                 </ul>
                 <p></p>
             </H5Text>
@@ -528,6 +528,6 @@ const H5Text = styled(Typography)(({ theme }) => ({
     textAlign: "justify",
     maxHeight: "300px",
     overflowY: "scroll",
-    padding:"0px 15px",
+    padding: "0px 15px",
 
 }));
